@@ -24,7 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<template #suffix><i v-if="agreeServerRules" class="ti ti-check" style="color: var(--success)"></i></template>
 
 				<ol class="_gaps_s" :class="$style.rules">
-					<li v-for="item in instance.serverRules" :class="$style.rule"><div :class="$style.ruleText" v-html="item"></div></li>
+					<li v-for="item in instance.serverRules" :class="$style.rule"><div :class="$style.ruleText" v-text="item"></div></li>
 				</ol>
 
 				<MkSwitch :modelValue="agreeServerRules" style="margin-top: 16px;" @update:modelValue="updateAgreeServerRules">{{ i18n.ts.agree }}</MkSwitch>

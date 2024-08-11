@@ -81,7 +81,7 @@ export class SecurityHeaderService {
 
 		const frameSrc = ['https://www.google.com/recaptcha/', 'https://recaptcha.google.com/recaptcha/', 'https://hcaptcha.com', 'https://*.hcaptcha.com', 'https://challenges.cloudflare.com', ...(this.config.contentSecurityPolicy?.frameSrc ?? [])].join(' ');
 
-		this.basePolicy = `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; img-src ${imgSrc}; media-src ${mediaSrc}; connect-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://cloudflareinsights.com/cdn-cgi/rum; frame-src ${frameSrc}; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none';${this.reportEnabled ? ' report-to csp;' : ''}`;
+		this.basePolicy = `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; img-src ${imgSrc}; media-src ${mediaSrc}; connect-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://cloudflareinsights.com/cdn-cgi/rum; frame-src ${frameSrc}; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types default;${this.reportEnabled ? ' report-to csp;' : ''}`;
 	}
 
 	@bindThis

@@ -24,8 +24,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<li v-for="emoji in emojis" :key="emoji.emoji" :class="$style.item" tabindex="-1" @click="complete(type, emoji.emoji)" @keydown="onKeydown">
 			<MkCustomEmoji v-if="'isCustomEmoji' in emoji && emoji.isCustomEmoji" :name="emoji.emoji" :class="$style.emoji" :fallbackToImage="true"/>
 			<MkEmoji v-else :emoji="emoji.emoji" :class="$style.emoji"/>
-			<!-- eslint-disable-next-line vue/no-v-html -->
-			<span v-if="q" :class="$style.emojiName" v-html="sanitizeHtml(emoji.name.replace(q, `<b>${q}</b>`))"></span>
+			<span v-if="q" :class="$style.emojiName">
+				{{ emoji.name.slice(0, emoji.name.indexOf(q)) }}<span :class="$style.emojiNameBold">{{ emoji.name.slice(emoji.name.indexOf(q), emoji.name.indexOf(q) + q.length) }}</span>{{ emoji.name.slice(emoji.name.indexOf(q) + q.length) }}
+			</span>
 			<span v-else v-text="emoji.name"></span>
 			<span v-if="emoji.aliasOf" :class="$style.emojiAlias">({{ emoji.aliasOf }})</span>
 		</li>
@@ -454,6 +455,10 @@ onBeforeUnmount(() => {
 
 .emojiName {
 	flex-shrink: 1;
+}
+
+.emojiNameBold {
+	font-weight: bold;
 }
 
 .emojiAlias {

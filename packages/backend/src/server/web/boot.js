@@ -32,6 +32,35 @@
 		renderError('FORCED_ERROR', 'This error is forced by having forceError in local storage.')
 	}
 
+	if (window.trustedTypes) {
+		trustedTypes.createPolicy('default', {
+			createScriptURL: (inputUrl) => {
+				if (inputUrl === 'https://static.cloudflareinsights.com/beacon.min.js') {
+					return 'https://static.cloudflareinsights.com/beacon.min.js';
+				}
+
+				try {
+					const url = new URL(inputUrl, location.origin);
+					if (url.origin === location.origin) {
+						return url.toString();
+					}
+				} catch {}
+
+				throw new Error();
+			},
+			createHTML: (inputHtml) => {
+				if (inputHtml === '') {
+					return '';
+				}
+
+				throw new Error();
+			},
+			createScript: (inputScript) => {
+				throw new Error();
+			},
+		});
+	}
+
 	//#region Detect language & fetch translations
 	if (!localStorage.hasOwnProperty('locale')) {
 		const supportedLangs = LANGS;

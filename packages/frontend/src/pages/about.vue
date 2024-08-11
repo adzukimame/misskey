@@ -20,7 +20,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 				<MkKeyValue>
 					<template #key>{{ i18n.ts.description }}</template>
-					<template #value><div v-html="instance.description"></div></template>
+					<template #value><div v-text="instance.description"></div></template>
 				</MkKeyValue>
 
 				<FormSection>
@@ -29,7 +29,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<template #key>Misskey</template>
 							<template #value>{{ version }}</template>
 						</MkKeyValue>
-						<div v-html="i18n.tsx.poweredByMisskeyDescription({ name: instance.name ?? host })">
+						<div v-text="i18n.tsx.poweredByMisskeyDescription({ name: instance.name ?? host }).replace(/<\/?b>/g, '')">
 						</div>
 						<FormLink to="/about-misskey">
 							<template #icon><i class="ti ti-info-circle"></i></template>
@@ -69,7 +69,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 								</template>
 
 								<ol class="_gaps_s" :class="$style.rules">
-									<li v-for="(item, index) in instance.serverRules" :key="index" :class="$style.rule"><div :class="$style.ruleText" v-html="item"></div></li>
+									<li v-for="(item, index) in instance.serverRules" :key="index" :class="$style.rule"><div :class="$style.ruleText" v-text="item"></div></li>
 								</ol>
 							</MkFolder>
 							<FormLink v-if="instance.tosUrl" :to="instance.tosUrl" external>

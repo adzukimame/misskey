@@ -15,8 +15,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<span>{{ instanceName }}</span>
 			</h1>
 			<div :class="$style.mainAbout">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="instance.description || i18n.ts.headlineMisskey"></div>
+				<div v-text="instance.description || i18n.ts.headlineMisskey"></div>
 			</div>
 			<div v-if="instance.disableRegistration" :class="$style.mainWarn">
 				<MkInfo warn>{{ i18n.ts.invitationRequiredToRegister }}</MkInfo>
