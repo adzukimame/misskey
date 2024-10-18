@@ -1,5 +1,4 @@
 import path from 'path';
-import { rmSync } from 'node:fs';
 import pluginReplace from '@rollup/plugin-replace';
 import pluginVue from '@vitejs/plugin-vue';
 import { type UserConfig, defineConfig } from 'vite';
@@ -72,12 +71,6 @@ export function getConfig(): UserConfig {
 			pluginVue(),
 			pluginUnwindCssModuleClassName(),
 			pluginJson5(),
-			{
-				name: 'remove-msw',
-				closeBundle() {
-					rmSync(__dirname + '/../../built/_vite_/mockServiceWorker.js');
-				},
-			},
 			...process.env.NODE_ENV === 'production'
 				? [
 					pluginReplace({

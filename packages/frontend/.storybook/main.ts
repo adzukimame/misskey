@@ -39,10 +39,6 @@ const config = {
 		if (~replacePluginForIsChromatic) {
 			config.plugins?.splice(replacePluginForIsChromatic, 1);
 		}
-		const pluginForRemoveMsw = config.plugins?.findIndex((plugin: Plugin) => plugin && plugin.name === 'remove-msw') ?? -1;
-		if (~pluginForRemoveMsw) {
-			config.plugins?.splice(pluginForRemoveMsw, 1);
-		}
 		return mergeConfig(config, {
 			plugins: [
 				{

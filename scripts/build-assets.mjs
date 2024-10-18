@@ -75,12 +75,19 @@ async function buildBackendStyle() {
   }
 }
 
+async function removeMockServiceWorker() {
+	if (process.env.NODE_ENV === 'production') {
+		await fs.rm('./built/_vite_/mockServiceWorker.js', { force: true });
+	}
+}
+
 async function build() {
   await Promise.all([
     copyFrontendLocales(),
     copyBackendViews(),
     buildBackendScript(),
     buildBackendStyle(),
+		removeMockServiceWorker(),
 		loadConfig().then(config => config?.publishTarballInsteadOfProvideRepositoryUrl && buildTarball()),
   ]);
 }
