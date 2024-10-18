@@ -4005,7 +4005,7 @@ export type components = {
       /** @enum {string} */
       type: 'roleAssigned';
       role: components['schemas']['Role'];
-    } | {
+    } | ({
       /** Format: id */
       id: string;
       /** Format: date-time */
@@ -4013,9 +4013,9 @@ export type components = {
       /** @enum {string} */
       type: 'app';
       body: string;
-      header: string;
-      icon: string;
-    } | {
+      header: string | null;
+      icon: string | null;
+    }) | {
       /** Format: id */
       id: string;
       /** Format: date-time */
@@ -4631,6 +4631,7 @@ export type components = {
        * @enum {string}
        */
       noteSearchableScope: 'local' | 'global';
+      maxFileSize: number;
     };
     MetaDetailedOnly: {
       features?: {
@@ -7900,7 +7901,7 @@ export type operations = {
       /** @description OK (with results) */
       200: {
         content: {
-          'application/json': ((string | number)[])[];
+          'application/json': [string, number][];
         };
       };
       /** @description Client error */
@@ -7946,7 +7947,7 @@ export type operations = {
       /** @description OK (with results) */
       200: {
         content: {
-          'application/json': ((string | number)[])[];
+          'application/json': [string, number][];
         };
       };
       /** @description Client error */
