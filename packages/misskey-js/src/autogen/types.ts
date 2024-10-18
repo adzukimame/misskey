@@ -7901,7 +7901,7 @@ export type operations = {
       /** @description OK (with results) */
       200: {
         content: {
-          'application/json': ((string | number)[])[];
+          'application/json': [string, number][];
         };
       };
       /** @description Client error */
@@ -7947,7 +7947,7 @@ export type operations = {
       /** @description OK (with results) */
       200: {
         content: {
-          'application/json': ((string | number)[])[];
+          'application/json': [string, number][];
         };
       };
       /** @description Client error */
