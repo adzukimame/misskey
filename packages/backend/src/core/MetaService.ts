@@ -11,7 +11,6 @@ import { MiMeta } from '@/models/Meta.js';
 import { GlobalEventService } from '@/core/GlobalEventService.js';
 import { bindThis } from '@/decorators.js';
 import type { GlobalEvents } from '@/core/GlobalEventService.js';
-import { FeaturedService } from '@/core/FeaturedService.js';
 import { FanoutTimelineService } from '@/core/FanoutTimelineService.js';
 import type { OnApplicationShutdown } from '@nestjs/common';
 
@@ -27,7 +26,6 @@ export class MetaService implements OnApplicationShutdown {
 		@Inject(DI.db)
 		private db: DataSource,
 
-		private featuredService: FeaturedService,
 		private globalEventService: GlobalEventService,
 		private fanoutTimelineService: FanoutTimelineService,
 	) {
@@ -127,21 +125,6 @@ export class MetaService implements OnApplicationShutdown {
 				return await transactionalEntityManager.save(MiMeta, data);
 			}
 		});
-
-		if (data.hiddenTags) {
-			process.nextTick(() => {
-				const hiddenTags = new Set<string>(data.hiddenTags);
-				if (before) {
-					for (const previousHiddenTag of before.hiddenTags) {
-						hiddenTags.delete(previousHiddenTag);
-					}
-				}
-
-				for (const hiddenTag of hiddenTags) {
-					this.featuredService.removeHashtagsFromRanking(hiddenTag);
-				}
-			});
-		}
 
 		if (before !== undefined && updated.enableFanoutTimeline !== before.enableFanoutTimeline) {
 			this.fanoutTimelineService.purgeAll();

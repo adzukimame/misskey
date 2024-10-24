@@ -8,10 +8,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
 	<MkSpacer :contentMax="700">
 		<MkHorizontalSwipe v-model:tab="tab" :tabs="headerTabs">
-			<div v-if="tab === 'featured'" key="featured">
-				<MkPagination v-slot="{items}" :pagination="featuredPagesPagination">
+			<div v-if="tab === 'liked'" key="liked">
+				<MkPagination v-slot="{items}" :pagination="likedPagesPagination">
 					<div class="_gaps">
-						<MkPagePreview v-for="page in items" :key="page.id" :page="page"/>
+						<MkPagePreview v-for="like in items" :key="like.page.id" :page="like.page"/>
 					</div>
 				</MkPagination>
 			</div>
@@ -21,14 +21,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<MkPagination v-slot="{items}" :pagination="myPagesPagination">
 					<div class="_gaps">
 						<MkPagePreview v-for="page in items" :key="page.id" :page="page"/>
-					</div>
-				</MkPagination>
-			</div>
-
-			<div v-else-if="tab === 'liked'" key="liked">
-				<MkPagination v-slot="{items}" :pagination="likedPagesPagination">
-					<div class="_gaps">
-						<MkPagePreview v-for="like in items" :key="like.page.id" :page="like.page"/>
 					</div>
 				</MkPagination>
 			</div>
@@ -49,12 +41,8 @@ import { useRouter } from '@/router/supplier.js';
 
 const router = useRouter();
 
-const tab = ref('featured');
+const tab = ref('liked');
 
-const featuredPagesPagination = {
-	endpoint: 'pages/featured' as const,
-	noPaging: true,
-};
 const myPagesPagination = {
 	endpoint: 'i/pages' as const,
 	limit: 5,
@@ -75,17 +63,13 @@ const headerActions = computed(() => [{
 }]);
 
 const headerTabs = computed(() => [{
-	key: 'featured',
-	title: i18n.ts._pages.featured,
-	icon: 'ti ti-flare',
+	key: 'liked',
+	title: i18n.ts._pages.liked,
+	icon: 'ti ti-heart',
 }, {
 	key: 'my',
 	title: i18n.ts._pages.my,
 	icon: 'ti ti-edit',
-}, {
-	key: 'liked',
-	title: i18n.ts._pages.liked,
-	icon: 'ti ti-heart',
 }]);
 
 definePageMetadata(() => ({

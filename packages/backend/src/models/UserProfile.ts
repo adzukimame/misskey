@@ -180,11 +180,6 @@ export class MiUserProfile {
 	@Column('boolean', {
 		default: true,
 	})
-	public injectFeaturedNote: boolean;
-
-	@Column('boolean', {
-		default: true,
-	})
 	public receiveAnnouncementEmail: boolean;
 
 	@Column({

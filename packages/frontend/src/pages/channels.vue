@@ -25,11 +25,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<MkChannelList :key="key" :pagination="channelPagination"/>
 				</MkFoldableSection>
 			</div>
-			<div v-if="tab === 'featured'" key="featured">
-				<MkPagination v-slot="{items}" :pagination="featuredPagination">
-					<MkChannelPreview v-for="channel in items" :key="channel.id" class="_margin" :channel="channel"/>
-				</MkPagination>
-			</div>
 			<div v-else-if="tab === 'favorites'" key="favorites">
 				<MkPagination v-slot="{items}" :pagination="favoritesPagination">
 					<MkChannelPreview v-for="channel in items" :key="channel.id" class="_margin" :channel="channel"/>
@@ -73,7 +68,7 @@ const props = defineProps<{
 }>();
 
 const key = ref('');
-const tab = ref('featured');
+const tab = ref('favorites');
 const searchQuery = ref('');
 const searchType = ref('nameAndDescription');
 const channelPagination = ref();
@@ -83,10 +78,6 @@ onMounted(() => {
 	searchType.value = props.type ?? 'nameAndDescription';
 });
 
-const featuredPagination = {
-	endpoint: 'channels/featured' as const,
-	noPaging: true,
-};
 const favoritesPagination = {
 	endpoint: 'channels/my-favorites' as const,
 	limit: 100,
@@ -134,10 +125,6 @@ const headerTabs = computed(() => [{
 	key: 'search',
 	title: i18n.ts.search,
 	icon: 'ti ti-search',
-}, {
-	key: 'featured',
-	title: i18n.ts._channel.featured,
-	icon: 'ti ti-comet',
 }, {
 	key: 'favorites',
 	title: i18n.ts.favorites,

@@ -284,23 +284,6 @@ describe('独自拡張', () => {
 	});
 
 	describe('ハイライトを隠す', () => {
-		describe('/api/notes/featured', () => {
-			test('はGETできない。', async () => {
-				const res = await simpleGet('/api/notes/featured', 'application/json');
-				assert.strictEqual(res.status, 405);
-			});
-
-			test('は認証情報がなければアクセスできない。', async () => {
-				const res = await api('notes/featured', {});
-				assert.strictEqual(res.status, 401);
-			});
-
-			test('は認証情報があればアクセスできる。', async () => {
-				const res = await api('notes/featured', {}, bob);
-				assert.strictEqual(res.status, 200);
-			});
-		});
-
 		describe('/api/users', () => {
 			test('はGETできない。', async () => {
 				const res = await simpleGet('/api/users', 'application/json');

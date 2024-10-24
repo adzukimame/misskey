@@ -70,7 +70,6 @@ import { UtilityService } from './UtilityService.js';
 import { FileInfoService } from './FileInfoService.js';
 import { SearchService } from './SearchService.js';
 import { ClipService } from './ClipService.js';
-import { FeaturedService } from './FeaturedService.js';
 import { FanoutTimelineService } from './FanoutTimelineService.js';
 import { ChannelFollowingService } from './ChannelFollowingService.js';
 import { RegistryApiService } from './RegistryApiService.js';
@@ -209,7 +208,6 @@ const $UtilityService: Provider = { provide: 'UtilityService', useExisting: Util
 const $FileInfoService: Provider = { provide: 'FileInfoService', useExisting: FileInfoService };
 const $SearchService: Provider = { provide: 'SearchService', useExisting: SearchService };
 const $ClipService: Provider = { provide: 'ClipService', useExisting: ClipService };
-const $FeaturedService: Provider = { provide: 'FeaturedService', useExisting: FeaturedService };
 const $FanoutTimelineService: Provider = { provide: 'FanoutTimelineService', useExisting: FanoutTimelineService };
 const $FanoutTimelineEndpointService: Provider = { provide: 'FanoutTimelineEndpointService', useExisting: FanoutTimelineEndpointService };
 const $ChannelFollowingService: Provider = { provide: 'ChannelFollowingService', useExisting: ChannelFollowingService };
@@ -352,7 +350,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		FileInfoService,
 		SearchService,
 		ClipService,
-		FeaturedService,
 		FanoutTimelineService,
 		FanoutTimelineEndpointService,
 		ChannelFollowingService,
@@ -491,7 +488,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$FileInfoService,
 		$SearchService,
 		$ClipService,
-		$FeaturedService,
 		$FanoutTimelineService,
 		$FanoutTimelineEndpointService,
 		$ChannelFollowingService,
@@ -631,7 +627,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		FileInfoService,
 		SearchService,
 		ClipService,
-		FeaturedService,
 		FanoutTimelineService,
 		FanoutTimelineEndpointService,
 		ChannelFollowingService,
@@ -769,7 +764,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$FileInfoService,
 		$SearchService,
 		$ClipService,
-		$FeaturedService,
 		$FanoutTimelineService,
 		$FanoutTimelineEndpointService,
 		$ChannelFollowingService,

@@ -116,7 +116,6 @@ describe('ユーザー', () => {
 			bannerId: user.bannerId,
 			isModerator: user.isModerator,
 			isAdmin: user.isAdmin,
-			injectFeaturedNote: user.injectFeaturedNote,
 			receiveAnnouncementEmail: user.receiveAnnouncementEmail,
 			alwaysMarkNsfw: user.alwaysMarkNsfw,
 			autoSensitive: user.autoSensitive,
@@ -350,7 +349,6 @@ describe('ユーザー', () => {
 		assert.strictEqual(response.bannerId, null);
 		assert.strictEqual(response.isModerator, false);
 		assert.strictEqual(response.isAdmin, false);
-		assert.strictEqual(response.injectFeaturedNote, true);
 		assert.strictEqual(response.receiveAnnouncementEmail, true);
 		assert.strictEqual(response.alwaysMarkNsfw, false);
 		assert.strictEqual(response.autoSensitive, false);
@@ -437,8 +435,6 @@ describe('ユーザー', () => {
 		{ parameters: () => ({ isBot: false }) },
 		{ parameters: () => ({ isCat: true }) },
 		{ parameters: () => ({ isCat: false }) },
-		{ parameters: () => ({ injectFeaturedNote: true }) },
-		{ parameters: () => ({ injectFeaturedNote: false }) },
 		{ parameters: () => ({ receiveAnnouncementEmail: true }) },
 		{ parameters: () => ({ receiveAnnouncementEmail: false }) },
 		{ parameters: () => ({ alwaysMarkNsfw: true }) },
@@ -843,17 +839,6 @@ describe('ユーザー', () => {
 		assert.deepStrictEqual(response, expected);
 	});
 	test.todo('をハッシュタグ指定で取得することができる(リモート)');
-
-	//#endregion
-	//#region オススメユーザー(users/recommendation)
-
-	// BUG users/recommendationは壊れている？ > QueryFailedError: missing FROM-clause entry for table "note"
-	test.skip('のオススメを取得することができる', async () => {
-		const parameters = {};
-		const response = await successfulApiCall({ endpoint: 'users/recommendation', parameters, user: alice });
-		const expected = await Promise.all(response.map(u => show(u.id)));
-		assert.deepStrictEqual(response, expected);
-	});
 
 	//#endregion
 	//#region ピン止めユーザー(pinned-users)

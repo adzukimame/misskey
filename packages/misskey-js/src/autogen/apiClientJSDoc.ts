@@ -1184,17 +1184,6 @@ declare module '../api.js' {
     /**
      * No description provided.
      * 
-     * **Credential required**: *No*
-     */
-    request<E extends 'channels/featured', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * No description provided.
-     * 
      * **Credential required**: *Yes* / **Permission**: *write:channels*
      */
     request<E extends 'channels/follow', P extends Endpoints[E]['req']>(
@@ -2035,17 +2024,6 @@ declare module '../api.js' {
      * **Credential required**: *No*
      */
     request<E extends 'hashtags/show', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * No description provided.
-     * 
-     * **Credential required**: *No*
-     */
-    request<E extends 'hashtags/trend', P extends Endpoints[E]['req']>(
       endpoint: E,
       params: P,
       credential?: string | null,
@@ -2944,17 +2922,6 @@ declare module '../api.js' {
     /**
      * No description provided.
      * 
-     * **Credential required**: *Yes* / **Permission**: *read:account*
-     */
-    request<E extends 'notes/featured', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * No description provided.
-     * 
      * **Credential required**: *No*
      */
     request<E extends 'notes/global-timeline', P extends Endpoints[E]['req']>(
@@ -2991,17 +2958,6 @@ declare module '../api.js' {
      * **Credential required**: *Yes* / **Permission**: *read:account*
      */
     request<E extends 'notes/mentions', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * No description provided.
-     * 
-     * **Credential required**: *Yes* / **Permission**: *read:account*
-     */
-    request<E extends 'notes/polls/recommendation', P extends Endpoints[E]['req']>(
       endpoint: E,
       params: P,
       credential?: string | null,
@@ -3264,17 +3220,6 @@ declare module '../api.js' {
     /**
      * No description provided.
      * 
-     * **Credential required**: *No*
-     */
-    request<E extends 'pages/featured', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * No description provided.
-     * 
      * **Credential required**: *Yes* / **Permission**: *write:page-likes*
      */
     request<E extends 'pages/like', P extends Endpoints[E]['req']>(
@@ -3333,17 +3278,6 @@ declare module '../api.js' {
      * **Credential required**: *Yes* / **Permission**: *write:flash*
      */
     request<E extends 'flash/delete', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * No description provided.
-     * 
-     * **Credential required**: *No*
-     */
-    request<E extends 'flash/featured', P extends Endpoints[E]['req']>(
       endpoint: E,
       params: P,
       credential?: string | null,
@@ -3672,17 +3606,6 @@ declare module '../api.js' {
     ): Promise<SwitchCaseResponseType<E, P>>;
 
     /**
-     * No description provided.
-     * 
-     * **Credential required**: *No*
-     */
-    request<E extends 'users/featured-notes', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
      * Create a new list of users.
      * 
      * **Credential required**: *Yes* / **Permission**: *write:account*
@@ -3853,17 +3776,6 @@ declare module '../api.js' {
      * **Credential required**: *No*
      */
     request<E extends 'users/reactions', P extends Endpoints[E]['req']>(
-      endpoint: E,
-      params: P,
-      credential?: string | null,
-    ): Promise<SwitchCaseResponseType<E, P>>;
-
-    /**
-     * Show users that the authenticated user might be interested to follow.
-     * 
-     * **Credential required**: *Yes* / **Permission**: *read:account*
-     */
-    request<E extends 'users/recommendation', P extends Endpoints[E]['req']>(
       endpoint: E,
       params: P,
       credential?: string | null,

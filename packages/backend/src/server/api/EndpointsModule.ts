@@ -112,7 +112,6 @@ import * as ep___blocking_create from './endpoints/blocking/create.js';
 import * as ep___blocking_delete from './endpoints/blocking/delete.js';
 import * as ep___blocking_list from './endpoints/blocking/list.js';
 import * as ep___channels_create from './endpoints/channels/create.js';
-import * as ep___channels_featured from './endpoints/channels/featured.js';
 import * as ep___channels_follow from './endpoints/channels/follow.js';
 import * as ep___channels_followed from './endpoints/channels/followed.js';
 import * as ep___channels_owned from './endpoints/channels/owned.js';
@@ -190,7 +189,6 @@ import * as ep___getAvatarDecorations from './endpoints/get-avatar-decorations.j
 import * as ep___hashtags_list from './endpoints/hashtags/list.js';
 import * as ep___hashtags_search from './endpoints/hashtags/search.js';
 import * as ep___hashtags_show from './endpoints/hashtags/show.js';
-import * as ep___hashtags_trend from './endpoints/hashtags/trend.js';
 import * as ep___hashtags_users from './endpoints/hashtags/users.js';
 import * as ep___i from './endpoints/i.js';
 import * as ep___i_2fa_done from './endpoints/i/2fa/done.js';
@@ -269,12 +267,10 @@ import * as ep___notes_create from './endpoints/notes/create.js';
 import * as ep___notes_delete from './endpoints/notes/delete.js';
 import * as ep___notes_favorites_create from './endpoints/notes/favorites/create.js';
 import * as ep___notes_favorites_delete from './endpoints/notes/favorites/delete.js';
-import * as ep___notes_featured from './endpoints/notes/featured.js';
 import * as ep___notes_globalTimeline from './endpoints/notes/global-timeline.js';
 import * as ep___notes_hybridTimeline from './endpoints/notes/hybrid-timeline.js';
 import * as ep___notes_localTimeline from './endpoints/notes/local-timeline.js';
 import * as ep___notes_mentions from './endpoints/notes/mentions.js';
-import * as ep___notes_polls_recommendation from './endpoints/notes/polls/recommendation.js';
 import * as ep___notes_polls_vote from './endpoints/notes/polls/vote.js';
 import * as ep___notes_reactions from './endpoints/notes/reactions.js';
 import * as ep___notes_reactions_create from './endpoints/notes/reactions/create.js';
@@ -298,14 +294,12 @@ import * as ep___notifications_testNotification from './endpoints/notifications/
 import * as ep___pagePush from './endpoints/page-push.js';
 import * as ep___pages_create from './endpoints/pages/create.js';
 import * as ep___pages_delete from './endpoints/pages/delete.js';
-import * as ep___pages_featured from './endpoints/pages/featured.js';
 import * as ep___pages_like from './endpoints/pages/like.js';
 import * as ep___pages_show from './endpoints/pages/show.js';
 import * as ep___pages_unlike from './endpoints/pages/unlike.js';
 import * as ep___pages_update from './endpoints/pages/update.js';
 import * as ep___flash_create from './endpoints/flash/create.js';
 import * as ep___flash_delete from './endpoints/flash/delete.js';
-import * as ep___flash_featured from './endpoints/flash/featured.js';
 import * as ep___flash_like from './endpoints/flash/like.js';
 import * as ep___flash_show from './endpoints/flash/show.js';
 import * as ep___flash_unlike from './endpoints/flash/unlike.js';
@@ -335,7 +329,6 @@ import * as ep___users_clips from './endpoints/users/clips.js';
 import * as ep___users_followers from './endpoints/users/followers.js';
 import * as ep___users_following from './endpoints/users/following.js';
 import * as ep___users_getFrequentlyRepliedUsers from './endpoints/users/get-frequently-replied-users.js';
-import * as ep___users_featuredNotes from './endpoints/users/featured-notes.js';
 import * as ep___users_lists_create from './endpoints/users/lists/create.js';
 import * as ep___users_lists_delete from './endpoints/users/lists/delete.js';
 import * as ep___users_lists_list from './endpoints/users/lists/list.js';
@@ -352,7 +345,6 @@ import * as ep___users_notes from './endpoints/users/notes.js';
 import * as ep___users_pages from './endpoints/users/pages.js';
 import * as ep___users_flashs from './endpoints/users/flashs.js';
 import * as ep___users_reactions from './endpoints/users/reactions.js';
-import * as ep___users_recommendation from './endpoints/users/recommendation.js';
 import * as ep___users_relation from './endpoints/users/relation.js';
 import * as ep___users_reportAbuse from './endpoints/users/report-abuse.js';
 import * as ep___users_searchByUsernameAndHost from './endpoints/users/search-by-username-and-host.js';
@@ -470,7 +462,6 @@ const $blocking_create: Provider = { provide: 'ep:blocking/create', useClass: ep
 const $blocking_delete: Provider = { provide: 'ep:blocking/delete', useClass: ep___blocking_delete.default };
 const $blocking_list: Provider = { provide: 'ep:blocking/list', useClass: ep___blocking_list.default };
 const $channels_create: Provider = { provide: 'ep:channels/create', useClass: ep___channels_create.default };
-const $channels_featured: Provider = { provide: 'ep:channels/featured', useClass: ep___channels_featured.default };
 const $channels_follow: Provider = { provide: 'ep:channels/follow', useClass: ep___channels_follow.default };
 const $channels_followed: Provider = { provide: 'ep:channels/followed', useClass: ep___channels_followed.default };
 const $channels_owned: Provider = { provide: 'ep:channels/owned', useClass: ep___channels_owned.default };
@@ -548,7 +539,6 @@ const $getAvatarDecorations: Provider = { provide: 'ep:get-avatar-decorations', 
 const $hashtags_list: Provider = { provide: 'ep:hashtags/list', useClass: ep___hashtags_list.default };
 const $hashtags_search: Provider = { provide: 'ep:hashtags/search', useClass: ep___hashtags_search.default };
 const $hashtags_show: Provider = { provide: 'ep:hashtags/show', useClass: ep___hashtags_show.default };
-const $hashtags_trend: Provider = { provide: 'ep:hashtags/trend', useClass: ep___hashtags_trend.default };
 const $hashtags_users: Provider = { provide: 'ep:hashtags/users', useClass: ep___hashtags_users.default };
 const $i: Provider = { provide: 'ep:i', useClass: ep___i.default };
 const $i_2fa_done: Provider = { provide: 'ep:i/2fa/done', useClass: ep___i_2fa_done.default };
@@ -627,12 +617,10 @@ const $notes_create: Provider = { provide: 'ep:notes/create', useClass: ep___not
 const $notes_delete: Provider = { provide: 'ep:notes/delete', useClass: ep___notes_delete.default };
 const $notes_favorites_create: Provider = { provide: 'ep:notes/favorites/create', useClass: ep___notes_favorites_create.default };
 const $notes_favorites_delete: Provider = { provide: 'ep:notes/favorites/delete', useClass: ep___notes_favorites_delete.default };
-const $notes_featured: Provider = { provide: 'ep:notes/featured', useClass: ep___notes_featured.default };
 const $notes_globalTimeline: Provider = { provide: 'ep:notes/global-timeline', useClass: ep___notes_globalTimeline.default };
 const $notes_hybridTimeline: Provider = { provide: 'ep:notes/hybrid-timeline', useClass: ep___notes_hybridTimeline.default };
 const $notes_localTimeline: Provider = { provide: 'ep:notes/local-timeline', useClass: ep___notes_localTimeline.default };
 const $notes_mentions: Provider = { provide: 'ep:notes/mentions', useClass: ep___notes_mentions.default };
-const $notes_polls_recommendation: Provider = { provide: 'ep:notes/polls/recommendation', useClass: ep___notes_polls_recommendation.default };
 const $notes_polls_vote: Provider = { provide: 'ep:notes/polls/vote', useClass: ep___notes_polls_vote.default };
 const $notes_reactions: Provider = { provide: 'ep:notes/reactions', useClass: ep___notes_reactions.default };
 const $notes_reactions_create: Provider = { provide: 'ep:notes/reactions/create', useClass: ep___notes_reactions_create.default };
@@ -656,14 +644,12 @@ const $notifications_testNotification: Provider = { provide: 'ep:notifications/t
 const $pagePush: Provider = { provide: 'ep:page-push', useClass: ep___pagePush.default };
 const $pages_create: Provider = { provide: 'ep:pages/create', useClass: ep___pages_create.default };
 const $pages_delete: Provider = { provide: 'ep:pages/delete', useClass: ep___pages_delete.default };
-const $pages_featured: Provider = { provide: 'ep:pages/featured', useClass: ep___pages_featured.default };
 const $pages_like: Provider = { provide: 'ep:pages/like', useClass: ep___pages_like.default };
 const $pages_show: Provider = { provide: 'ep:pages/show', useClass: ep___pages_show.default };
 const $pages_unlike: Provider = { provide: 'ep:pages/unlike', useClass: ep___pages_unlike.default };
 const $pages_update: Provider = { provide: 'ep:pages/update', useClass: ep___pages_update.default };
 const $flash_create: Provider = { provide: 'ep:flash/create', useClass: ep___flash_create.default };
 const $flash_delete: Provider = { provide: 'ep:flash/delete', useClass: ep___flash_delete.default };
-const $flash_featured: Provider = { provide: 'ep:flash/featured', useClass: ep___flash_featured.default };
 const $flash_like: Provider = { provide: 'ep:flash/like', useClass: ep___flash_like.default };
 const $flash_show: Provider = { provide: 'ep:flash/show', useClass: ep___flash_show.default };
 const $flash_unlike: Provider = { provide: 'ep:flash/unlike', useClass: ep___flash_unlike.default };
@@ -693,7 +679,6 @@ const $users_clips: Provider = { provide: 'ep:users/clips', useClass: ep___users
 const $users_followers: Provider = { provide: 'ep:users/followers', useClass: ep___users_followers.default };
 const $users_following: Provider = { provide: 'ep:users/following', useClass: ep___users_following.default };
 const $users_getFrequentlyRepliedUsers: Provider = { provide: 'ep:users/get-frequently-replied-users', useClass: ep___users_getFrequentlyRepliedUsers.default };
-const $users_featuredNotes: Provider = { provide: 'ep:users/featured-notes', useClass: ep___users_featuredNotes.default };
 const $users_lists_create: Provider = { provide: 'ep:users/lists/create', useClass: ep___users_lists_create.default };
 const $users_lists_delete: Provider = { provide: 'ep:users/lists/delete', useClass: ep___users_lists_delete.default };
 const $users_lists_list: Provider = { provide: 'ep:users/lists/list', useClass: ep___users_lists_list.default };
@@ -710,7 +695,6 @@ const $users_notes: Provider = { provide: 'ep:users/notes', useClass: ep___users
 const $users_pages: Provider = { provide: 'ep:users/pages', useClass: ep___users_pages.default };
 const $users_flashs: Provider = { provide: 'ep:users/flashs', useClass: ep___users_flashs.default };
 const $users_reactions: Provider = { provide: 'ep:users/reactions', useClass: ep___users_reactions.default };
-const $users_recommendation: Provider = { provide: 'ep:users/recommendation', useClass: ep___users_recommendation.default };
 const $users_relation: Provider = { provide: 'ep:users/relation', useClass: ep___users_relation.default };
 const $users_reportAbuse: Provider = { provide: 'ep:users/report-abuse', useClass: ep___users_reportAbuse.default };
 const $users_searchByUsernameAndHost: Provider = { provide: 'ep:users/search-by-username-and-host', useClass: ep___users_searchByUsernameAndHost.default };
@@ -832,7 +816,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$blocking_delete,
 		$blocking_list,
 		$channels_create,
-		$channels_featured,
 		$channels_follow,
 		$channels_followed,
 		$channels_owned,
@@ -910,7 +893,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$hashtags_list,
 		$hashtags_search,
 		$hashtags_show,
-		$hashtags_trend,
 		$hashtags_users,
 		$i,
 		$i_2fa_done,
@@ -989,12 +971,10 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$notes_delete,
 		$notes_favorites_create,
 		$notes_favorites_delete,
-		$notes_featured,
 		$notes_globalTimeline,
 		$notes_hybridTimeline,
 		$notes_localTimeline,
 		$notes_mentions,
-		$notes_polls_recommendation,
 		$notes_polls_vote,
 		$notes_reactions,
 		$notes_reactions_create,
@@ -1018,14 +998,12 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$pagePush,
 		$pages_create,
 		$pages_delete,
-		$pages_featured,
 		$pages_like,
 		$pages_show,
 		$pages_unlike,
 		$pages_update,
 		$flash_create,
 		$flash_delete,
-		$flash_featured,
 		$flash_like,
 		$flash_show,
 		$flash_unlike,
@@ -1055,7 +1033,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$users_followers,
 		$users_following,
 		$users_getFrequentlyRepliedUsers,
-		$users_featuredNotes,
 		$users_lists_create,
 		$users_lists_delete,
 		$users_lists_list,
@@ -1072,7 +1049,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$users_pages,
 		$users_flashs,
 		$users_reactions,
-		$users_recommendation,
 		$users_relation,
 		$users_reportAbuse,
 		$users_searchByUsernameAndHost,
@@ -1188,7 +1164,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$blocking_delete,
 		$blocking_list,
 		$channels_create,
-		$channels_featured,
 		$channels_follow,
 		$channels_followed,
 		$channels_owned,
@@ -1266,7 +1241,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$hashtags_list,
 		$hashtags_search,
 		$hashtags_show,
-		$hashtags_trend,
 		$hashtags_users,
 		$i,
 		$i_2fa_done,
@@ -1345,12 +1319,10 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$notes_delete,
 		$notes_favorites_create,
 		$notes_favorites_delete,
-		$notes_featured,
 		$notes_globalTimeline,
 		$notes_hybridTimeline,
 		$notes_localTimeline,
 		$notes_mentions,
-		$notes_polls_recommendation,
 		$notes_polls_vote,
 		$notes_reactions,
 		$notes_reactions_create,
@@ -1374,14 +1346,12 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$pagePush,
 		$pages_create,
 		$pages_delete,
-		$pages_featured,
 		$pages_like,
 		$pages_show,
 		$pages_unlike,
 		$pages_update,
 		$flash_create,
 		$flash_delete,
-		$flash_featured,
 		$flash_like,
 		$flash_show,
 		$flash_unlike,
@@ -1409,7 +1379,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$users_followers,
 		$users_following,
 		$users_getFrequentlyRepliedUsers,
-		$users_featuredNotes,
 		$users_lists_create,
 		$users_lists_delete,
 		$users_lists_list,
@@ -1426,7 +1395,6 @@ const $retention: Provider = { provide: 'ep:retention', useClass: ep___retention
 		$users_pages,
 		$users_flashs,
 		$users_reactions,
-		$users_recommendation,
 		$users_relation,
 		$users_reportAbuse,
 		$users_searchByUsernameAndHost,

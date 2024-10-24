@@ -48,7 +48,6 @@ import { bindThis } from '@/decorators.js';
 import { DB_MAX_NOTE_TEXT_LENGTH } from '@/const.js';
 import { RoleService } from '@/core/RoleService.js';
 import { SearchService } from '@/core/SearchService.js';
-import { FeaturedService } from '@/core/FeaturedService.js';
 import { FanoutTimelineService } from '@/core/FanoutTimelineService.js';
 import { UtilityService } from '@/core/UtilityService.js';
 import { UserBlockingService } from '@/core/UserBlockingService.js';
@@ -203,7 +202,6 @@ export class NoteCreateService implements OnApplicationShutdown {
 		private hashtagService: HashtagService,
 		private antennaService: AntennaService,
 		private webhookService: UserWebhookService,
-		private featuredService: FeaturedService,
 		private remoteUserResolveService: RemoteUserResolveService,
 		private apDeliverManagerService: ApDeliverManagerService,
 		private apRendererService: ApRendererService,
@@ -743,20 +741,6 @@ export class NoteCreateService implements OnApplicationShutdown {
 			})
 			.where('id = :id', { id: renote.id })
 			.execute();
-
-		// 30%の確率、3日以内に投稿されたノートの場合ハイライト用ランキング更新
-		if (Math.random() < 0.3 && (Date.now() - this.idService.parse(renote.id).date.getTime()) < 1000 * 60 * 60 * 24 * 3) {
-			if (renote.channelId != null) {
-				if (renote.replyId == null) {
-					this.featuredService.updateInChannelNotesRanking(renote.channelId, renote.id, 5);
-				}
-			} else {
-				if (renote.visibility === 'public' && renote.userHost == null && renote.replyId == null) {
-					this.featuredService.updateGlobalNotesRanking(renote.id, 5);
-					this.featuredService.updatePerUserNotesRanking(renote.userId, renote.id, 5);
-				}
-			}
-		}
 	}
 
 	@bindThis

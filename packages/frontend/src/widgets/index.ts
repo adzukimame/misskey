@@ -12,7 +12,6 @@ export default function(app: App) {
 	app.component('WidgetNotifications', defineAsyncComponent(() => import('./WidgetNotifications.vue')));
 	app.component('WidgetTimeline', defineAsyncComponent(() => import('./WidgetTimeline.vue')));
 	app.component('WidgetCalendar', defineAsyncComponent(() => import('./WidgetCalendar.vue')));
-	app.component('WidgetTrends', defineAsyncComponent(() => import('./WidgetTrends.vue')));
 	app.component('WidgetClock', defineAsyncComponent(() => import('./WidgetClock.vue')));
 	app.component('WidgetActivity', defineAsyncComponent(() => import('./WidgetActivity.vue')));
 	app.component('WidgetPhotos', defineAsyncComponent(() => import('./WidgetPhotos.vue')));
@@ -40,7 +39,6 @@ export const widgets = [
 	'notifications',
 	'timeline',
 	'calendar',
-	'trends',
 	'clock',
 	'activity',
 	'photos',

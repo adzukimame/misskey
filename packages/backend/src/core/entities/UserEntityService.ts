@@ -571,7 +571,6 @@ export class UserEntityService implements OnModuleInit {
 				bannerId: user.bannerId,
 				isModerator: isModerator,
 				isAdmin: isAdmin,
-				injectFeaturedNote: profile!.injectFeaturedNote,
 				receiveAnnouncementEmail: profile!.receiveAnnouncementEmail,
 				alwaysMarkNsfw: profile!.alwaysMarkNsfw,
 				autoSensitive: profile!.autoSensitive,

@@ -445,10 +445,6 @@ export const packedMeDetailedOnlySchema = {
 			type: 'boolean',
 			nullable: true, optional: false,
 		},
-		injectFeaturedNote: {
-			type: 'boolean',
-			nullable: false, optional: false,
-		},
 		receiveAnnouncementEmail: {
 			type: 'boolean',
 			nullable: false, optional: false,

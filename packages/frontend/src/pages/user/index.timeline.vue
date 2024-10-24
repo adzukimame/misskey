@@ -7,7 +7,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 <MkStickyContainer>
 	<template #header>
 		<MkTab v-model="tab" :class="$style.tab">
-			<option value="featured">{{ i18n.ts.featured }}</option>
 			<option :value="null">{{ i18n.ts.notes }}</option>
 			<option value="all">{{ i18n.ts.all }}</option>
 			<option value="files">{{ i18n.ts.withFiles }}</option>
@@ -31,13 +30,7 @@ const props = defineProps<{
 
 const tab = ref<string | null>($i ? null : 'all');
 
-const pagination = computed(() => tab.value === 'featured' ? {
-	endpoint: 'users/featured-notes' as const,
-	limit: 10,
-	params: {
-		userId: props.user.id,
-	},
-} : {
+const pagination = computed(() => ({
 	endpoint: 'users/notes' as const,
 	limit: 10,
 	params: {
@@ -47,7 +40,7 @@ const pagination = computed(() => tab.value === 'featured' ? {
 		withChannelNotes: tab.value === 'all' && props.user.host === null,
 		withFiles: tab.value === 'files',
 	},
-});
+}));
 </script>
 
 <style lang="scss" module>

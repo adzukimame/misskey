@@ -13,7 +13,6 @@ import type { MiHashtag } from '@/models/Hashtag.js';
 import type { HashtagsRepository, MiMeta } from '@/models/_.js';
 import { UserEntityService } from '@/core/entities/UserEntityService.js';
 import { bindThis } from '@/decorators.js';
-import { FeaturedService } from '@/core/FeaturedService.js';
 import { UtilityService } from '@/core/UtilityService.js';
 
 @Injectable()
@@ -29,7 +28,6 @@ export class HashtagService {
 		private hashtagsRepository: HashtagsRepository,
 
 		private userEntityService: UserEntityService,
-		private featuredService: FeaturedService,
 		private idService: IdService,
 		private utilityService: UtilityService,
 	) {
@@ -56,9 +54,6 @@ export class HashtagService {
 	@bindThis
 	public async updateHashtag(user: { id: MiUser['id']; host: MiUser['host']; }, tag: string, isUserAttached = false, inc = true) {
 		tag = normalizeForSearch(tag);
-
-		// TODO: サンプリング
-		this.updateHashtagsRanking(tag, user.id);
 
 		const index = await this.hashtagsRepository.findOneBy({ name: tag });
 
@@ -157,42 +152,6 @@ export class HashtagService {
 				} as MiHashtag);
 			}
 		}
-	}
-
-	@bindThis
-	public async updateHashtagsRanking(hashtag: string, userId: MiUser['id']): Promise<void> {
-		const hiddenTags = this.meta.hiddenTags.map(t => normalizeForSearch(t));
-		if (hiddenTags.includes(hashtag)) return;
-		if (this.utilityService.isKeyWordIncluded(hashtag, this.meta.sensitiveWords)) return;
-
-		// YYYYMMDDHHmm (10分間隔)
-		const now = new Date();
-		now.setMinutes(Math.floor(now.getMinutes() / 10) * 10, 0, 0);
-		const window = `${now.getUTCFullYear()}${(now.getUTCMonth() + 1).toString().padStart(2, '0')}${now.getUTCDate().toString().padStart(2, '0')}${now.getUTCHours().toString().padStart(2, '0')}${now.getUTCMinutes().toString().padStart(2, '0')}`;
-
-		const exist = await this.redisClient.sismember(`hashtagUsers:${hashtag}`, userId);
-		if (exist === 1) return;
-
-		this.featuredService.updateHashtagsRanking(hashtag, 1);
-
-		const redisPipeline = this.redisClient.pipeline();
-
-		// チャート用
-		redisPipeline.pfadd(`hashtagUsers:${hashtag}:${window}`, userId);
-		redisPipeline.expire(`hashtagUsers:${hashtag}:${window}`,
-			60 * 60 * 24 * 3, // 3日間
-			'NX', // "NX -- Set expiry only when the key has no expiry" = 有効期限がないときだけ設定
-		);
-
-		// ユニークカウント用
-		// TODO: Bloom Filter を使うようにしても良さそう
-		redisPipeline.sadd(`hashtagUsers:${hashtag}`, userId);
-		redisPipeline.expire(`hashtagUsers:${hashtag}`,
-			60 * 60, // 1時間
-			'NX', // "NX -- Set expiry only when the key has no expiry" = 有効期限がないときだけ設定
-		);
-
-		redisPipeline.exec();
 	}
 
 	@bindThis

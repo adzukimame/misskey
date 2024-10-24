@@ -41,9 +41,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 				<MkTimeline :key="channelId" src="channel" :channel="channelId" @before="before" @after="after" @note="miLocalStorage.setItemAsJson(`channelLastReadedAt:${channel.id}`, Date.now())"/>
 			</div>
-			<div v-else-if="tab === 'featured'" key="featured">
-				<MkNotes :pagination="featuredPagination"/>
-			</div>
 			<div v-else-if="tab === 'search'" key="search">
 				<div class="_gaps">
 					<div>
@@ -110,13 +107,6 @@ const favorited = ref(false);
 const searchQuery = ref('');
 const searchPagination = ref();
 const searchKey = ref('');
-const featuredPagination = computed(() => ({
-	endpoint: 'notes/featured' as const,
-	limit: 10,
-	params: {
-		channelId: props.channelId,
-	},
-}));
 
 watch(() => props.channelId, async () => {
 	channel.value = await misskeyApi('channels/show', {
@@ -251,10 +241,6 @@ const headerTabs = computed(() => [{
 	key: 'timeline',
 	title: i18n.ts.timeline,
 	icon: 'ti ti-home',
-}, {
-	key: 'featured',
-	title: i18n.ts.featured,
-	icon: 'ti ti-bolt',
 }, {
 	key: 'search',
 	title: i18n.ts.search,

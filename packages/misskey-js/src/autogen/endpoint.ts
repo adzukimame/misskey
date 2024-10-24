@@ -154,7 +154,6 @@ import type {
 	BlockingListResponse,
 	ChannelsCreateRequest,
 	ChannelsCreateResponse,
-	ChannelsFeaturedResponse,
 	ChannelsFollowRequest,
 	ChannelsFollowedRequest,
 	ChannelsFollowedResponse,
@@ -284,7 +283,6 @@ import type {
 	HashtagsSearchResponse,
 	HashtagsShowRequest,
 	HashtagsShowResponse,
-	HashtagsTrendResponse,
 	HashtagsUsersRequest,
 	HashtagsUsersResponse,
 	IResponse,
@@ -392,8 +390,6 @@ import type {
 	NotesDeleteRequest,
 	NotesFavoritesCreateRequest,
 	NotesFavoritesDeleteRequest,
-	NotesFeaturedRequest,
-	NotesFeaturedResponse,
 	NotesGlobalTimelineRequest,
 	NotesGlobalTimelineResponse,
 	NotesHybridTimelineRequest,
@@ -402,8 +398,6 @@ import type {
 	NotesLocalTimelineResponse,
 	NotesMentionsRequest,
 	NotesMentionsResponse,
-	NotesPollsRecommendationRequest,
-	NotesPollsRecommendationResponse,
 	NotesPollsVoteRequest,
 	NotesReactionsRequest,
 	NotesReactionsResponse,
@@ -435,7 +429,6 @@ import type {
 	PagesCreateRequest,
 	PagesCreateResponse,
 	PagesDeleteRequest,
-	PagesFeaturedResponse,
 	PagesLikeRequest,
 	PagesShowRequest,
 	PagesShowResponse,
@@ -444,7 +437,6 @@ import type {
 	FlashCreateRequest,
 	FlashCreateResponse,
 	FlashDeleteRequest,
-	FlashFeaturedResponse,
 	FlashLikeRequest,
 	FlashShowRequest,
 	FlashShowResponse,
@@ -489,8 +481,6 @@ import type {
 	UsersFollowingResponse,
 	UsersGetFrequentlyRepliedUsersRequest,
 	UsersGetFrequentlyRepliedUsersResponse,
-	UsersFeaturedNotesRequest,
-	UsersFeaturedNotesResponse,
 	UsersListsCreateRequest,
 	UsersListsCreateResponse,
 	UsersListsDeleteRequest,
@@ -517,8 +507,6 @@ import type {
 	UsersFlashsResponse,
 	UsersReactionsRequest,
 	UsersReactionsResponse,
-	UsersRecommendationRequest,
-	UsersRecommendationResponse,
 	UsersRelationRequest,
 	UsersRelationResponse,
 	UsersReportAbuseRequest,
@@ -639,7 +627,6 @@ export type Endpoints = {
 	'blocking/delete': { req: BlockingDeleteRequest; res: BlockingDeleteResponse };
 	'blocking/list': { req: BlockingListRequest; res: BlockingListResponse };
 	'channels/create': { req: ChannelsCreateRequest; res: ChannelsCreateResponse };
-	'channels/featured': { req: EmptyRequest; res: ChannelsFeaturedResponse };
 	'channels/follow': { req: ChannelsFollowRequest; res: EmptyResponse };
 	'channels/followed': { req: ChannelsFollowedRequest; res: ChannelsFollowedResponse };
 	'channels/owned': { req: ChannelsOwnedRequest; res: ChannelsOwnedResponse };
@@ -717,7 +704,6 @@ export type Endpoints = {
 	'hashtags/list': { req: HashtagsListRequest; res: HashtagsListResponse };
 	'hashtags/search': { req: HashtagsSearchRequest; res: HashtagsSearchResponse };
 	'hashtags/show': { req: HashtagsShowRequest; res: HashtagsShowResponse };
-	'hashtags/trend': { req: EmptyRequest; res: HashtagsTrendResponse };
 	'hashtags/users': { req: HashtagsUsersRequest; res: HashtagsUsersResponse };
 	'i': { req: EmptyRequest; res: IResponse };
 	'i/2fa/done': { req: I2faDoneRequest; res: I2faDoneResponse };
@@ -796,12 +782,10 @@ export type Endpoints = {
 	'notes/delete': { req: NotesDeleteRequest; res: EmptyResponse };
 	'notes/favorites/create': { req: NotesFavoritesCreateRequest; res: EmptyResponse };
 	'notes/favorites/delete': { req: NotesFavoritesDeleteRequest; res: EmptyResponse };
-	'notes/featured': { req: NotesFeaturedRequest; res: NotesFeaturedResponse };
 	'notes/global-timeline': { req: NotesGlobalTimelineRequest; res: NotesGlobalTimelineResponse };
 	'notes/hybrid-timeline': { req: NotesHybridTimelineRequest; res: NotesHybridTimelineResponse };
 	'notes/local-timeline': { req: NotesLocalTimelineRequest; res: NotesLocalTimelineResponse };
 	'notes/mentions': { req: NotesMentionsRequest; res: NotesMentionsResponse };
-	'notes/polls/recommendation': { req: NotesPollsRecommendationRequest; res: NotesPollsRecommendationResponse };
 	'notes/polls/vote': { req: NotesPollsVoteRequest; res: EmptyResponse };
 	'notes/reactions': { req: NotesReactionsRequest; res: NotesReactionsResponse };
 	'notes/reactions/create': { req: NotesReactionsCreateRequest; res: EmptyResponse };
@@ -825,14 +809,12 @@ export type Endpoints = {
 	'page-push': { req: PagePushRequest; res: EmptyResponse };
 	'pages/create': { req: PagesCreateRequest; res: PagesCreateResponse };
 	'pages/delete': { req: PagesDeleteRequest; res: EmptyResponse };
-	'pages/featured': { req: EmptyRequest; res: PagesFeaturedResponse };
 	'pages/like': { req: PagesLikeRequest; res: EmptyResponse };
 	'pages/show': { req: PagesShowRequest; res: PagesShowResponse };
 	'pages/unlike': { req: PagesUnlikeRequest; res: EmptyResponse };
 	'pages/update': { req: PagesUpdateRequest; res: EmptyResponse };
 	'flash/create': { req: FlashCreateRequest; res: FlashCreateResponse };
 	'flash/delete': { req: FlashDeleteRequest; res: EmptyResponse };
-	'flash/featured': { req: EmptyRequest; res: FlashFeaturedResponse };
 	'flash/like': { req: FlashLikeRequest; res: EmptyResponse };
 	'flash/show': { req: FlashShowRequest; res: FlashShowResponse };
 	'flash/unlike': { req: FlashUnlikeRequest; res: EmptyResponse };
@@ -862,7 +844,6 @@ export type Endpoints = {
 	'users/followers': { req: UsersFollowersRequest; res: UsersFollowersResponse };
 	'users/following': { req: UsersFollowingRequest; res: UsersFollowingResponse };
 	'users/get-frequently-replied-users': { req: UsersGetFrequentlyRepliedUsersRequest; res: UsersGetFrequentlyRepliedUsersResponse };
-	'users/featured-notes': { req: UsersFeaturedNotesRequest; res: UsersFeaturedNotesResponse };
 	'users/lists/create': { req: UsersListsCreateRequest; res: UsersListsCreateResponse };
 	'users/lists/delete': { req: UsersListsDeleteRequest; res: EmptyResponse };
 	'users/lists/list': { req: UsersListsListRequest; res: UsersListsListResponse };
@@ -879,7 +860,6 @@ export type Endpoints = {
 	'users/pages': { req: UsersPagesRequest; res: UsersPagesResponse };
 	'users/flashs': { req: UsersFlashsRequest; res: UsersFlashsResponse };
 	'users/reactions': { req: UsersReactionsRequest; res: UsersReactionsResponse };
-	'users/recommendation': { req: UsersRecommendationRequest; res: UsersRecommendationResponse };
 	'users/relation': { req: UsersRelationRequest; res: UsersRelationResponse };
 	'users/report-abuse': { req: UsersReportAbuseRequest; res: EmptyResponse };
 	'users/search-by-username-and-host': { req: UsersSearchByUsernameAndHostRequest; res: UsersSearchByUsernameAndHostResponse };

@@ -173,7 +173,6 @@ export const paramDef = {
 		preventAiLearning: { type: 'boolean' },
 		isBot: { type: 'boolean' },
 		isCat: { type: 'boolean' },
-		injectFeaturedNote: { type: 'boolean' },
 		receiveAnnouncementEmail: { type: 'boolean' },
 		alwaysMarkNsfw: { type: 'boolean' },
 		autoSensitive: { type: 'boolean' },
@@ -321,7 +320,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			if (typeof ps.noCrawle === 'boolean') profileUpdates.noCrawle = ps.noCrawle;
 			if (typeof ps.preventAiLearning === 'boolean') profileUpdates.preventAiLearning = ps.preventAiLearning;
 			if (typeof ps.isCat === 'boolean') updates.isCat = ps.isCat;
-			if (typeof ps.injectFeaturedNote === 'boolean') profileUpdates.injectFeaturedNote = ps.injectFeaturedNote;
 			if (typeof ps.receiveAnnouncementEmail === 'boolean') profileUpdates.receiveAnnouncementEmail = ps.receiveAnnouncementEmail;
 			if (typeof ps.alwaysMarkNsfw === 'boolean') {
 				policies ??= await this.roleService.getUserPolicies(user.id);

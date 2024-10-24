@@ -118,7 +118,6 @@ import * as ep___blocking_create from './endpoints/blocking/create.js';
 import * as ep___blocking_delete from './endpoints/blocking/delete.js';
 import * as ep___blocking_list from './endpoints/blocking/list.js';
 import * as ep___channels_create from './endpoints/channels/create.js';
-import * as ep___channels_featured from './endpoints/channels/featured.js';
 import * as ep___channels_follow from './endpoints/channels/follow.js';
 import * as ep___channels_followed from './endpoints/channels/followed.js';
 import * as ep___channels_owned from './endpoints/channels/owned.js';
@@ -196,7 +195,6 @@ import * as ep___getAvatarDecorations from './endpoints/get-avatar-decorations.j
 import * as ep___hashtags_list from './endpoints/hashtags/list.js';
 import * as ep___hashtags_search from './endpoints/hashtags/search.js';
 import * as ep___hashtags_show from './endpoints/hashtags/show.js';
-import * as ep___hashtags_trend from './endpoints/hashtags/trend.js';
 import * as ep___hashtags_users from './endpoints/hashtags/users.js';
 import * as ep___i from './endpoints/i.js';
 import * as ep___i_2fa_done from './endpoints/i/2fa/done.js';
@@ -275,12 +273,10 @@ import * as ep___notes_create from './endpoints/notes/create.js';
 import * as ep___notes_delete from './endpoints/notes/delete.js';
 import * as ep___notes_favorites_create from './endpoints/notes/favorites/create.js';
 import * as ep___notes_favorites_delete from './endpoints/notes/favorites/delete.js';
-import * as ep___notes_featured from './endpoints/notes/featured.js';
 import * as ep___notes_globalTimeline from './endpoints/notes/global-timeline.js';
 import * as ep___notes_hybridTimeline from './endpoints/notes/hybrid-timeline.js';
 import * as ep___notes_localTimeline from './endpoints/notes/local-timeline.js';
 import * as ep___notes_mentions from './endpoints/notes/mentions.js';
-import * as ep___notes_polls_recommendation from './endpoints/notes/polls/recommendation.js';
 import * as ep___notes_polls_vote from './endpoints/notes/polls/vote.js';
 import * as ep___notes_reactions from './endpoints/notes/reactions.js';
 import * as ep___notes_reactions_create from './endpoints/notes/reactions/create.js';
@@ -304,14 +300,12 @@ import * as ep___notifications_testNotification from './endpoints/notifications/
 import * as ep___pagePush from './endpoints/page-push.js';
 import * as ep___pages_create from './endpoints/pages/create.js';
 import * as ep___pages_delete from './endpoints/pages/delete.js';
-import * as ep___pages_featured from './endpoints/pages/featured.js';
 import * as ep___pages_like from './endpoints/pages/like.js';
 import * as ep___pages_show from './endpoints/pages/show.js';
 import * as ep___pages_unlike from './endpoints/pages/unlike.js';
 import * as ep___pages_update from './endpoints/pages/update.js';
 import * as ep___flash_create from './endpoints/flash/create.js';
 import * as ep___flash_delete from './endpoints/flash/delete.js';
-import * as ep___flash_featured from './endpoints/flash/featured.js';
 import * as ep___flash_like from './endpoints/flash/like.js';
 import * as ep___flash_show from './endpoints/flash/show.js';
 import * as ep___flash_unlike from './endpoints/flash/unlike.js';
@@ -341,7 +335,6 @@ import * as ep___users_clips from './endpoints/users/clips.js';
 import * as ep___users_followers from './endpoints/users/followers.js';
 import * as ep___users_following from './endpoints/users/following.js';
 import * as ep___users_getFrequentlyRepliedUsers from './endpoints/users/get-frequently-replied-users.js';
-import * as ep___users_featuredNotes from './endpoints/users/featured-notes.js';
 import * as ep___users_lists_create from './endpoints/users/lists/create.js';
 import * as ep___users_lists_delete from './endpoints/users/lists/delete.js';
 import * as ep___users_lists_list from './endpoints/users/lists/list.js';
@@ -358,7 +351,6 @@ import * as ep___users_notes from './endpoints/users/notes.js';
 import * as ep___users_pages from './endpoints/users/pages.js';
 import * as ep___users_flashs from './endpoints/users/flashs.js';
 import * as ep___users_reactions from './endpoints/users/reactions.js';
-import * as ep___users_recommendation from './endpoints/users/recommendation.js';
 import * as ep___users_relation from './endpoints/users/relation.js';
 import * as ep___users_reportAbuse from './endpoints/users/report-abuse.js';
 import * as ep___users_searchByUsernameAndHost from './endpoints/users/search-by-username-and-host.js';
@@ -474,7 +466,6 @@ const eps = [
 	['blocking/delete', ep___blocking_delete],
 	['blocking/list', ep___blocking_list],
 	['channels/create', ep___channels_create],
-	['channels/featured', ep___channels_featured],
 	['channels/follow', ep___channels_follow],
 	['channels/followed', ep___channels_followed],
 	['channels/owned', ep___channels_owned],
@@ -552,7 +543,6 @@ const eps = [
 	['hashtags/list', ep___hashtags_list],
 	['hashtags/search', ep___hashtags_search],
 	['hashtags/show', ep___hashtags_show],
-	['hashtags/trend', ep___hashtags_trend],
 	['hashtags/users', ep___hashtags_users],
 	['i', ep___i],
 	['i/2fa/done', ep___i_2fa_done],
@@ -631,12 +621,10 @@ const eps = [
 	['notes/delete', ep___notes_delete],
 	['notes/favorites/create', ep___notes_favorites_create],
 	['notes/favorites/delete', ep___notes_favorites_delete],
-	['notes/featured', ep___notes_featured],
 	['notes/global-timeline', ep___notes_globalTimeline],
 	['notes/hybrid-timeline', ep___notes_hybridTimeline],
 	['notes/local-timeline', ep___notes_localTimeline],
 	['notes/mentions', ep___notes_mentions],
-	['notes/polls/recommendation', ep___notes_polls_recommendation],
 	['notes/polls/vote', ep___notes_polls_vote],
 	['notes/reactions', ep___notes_reactions],
 	['notes/reactions/create', ep___notes_reactions_create],
@@ -660,14 +648,12 @@ const eps = [
 	['page-push', ep___pagePush],
 	['pages/create', ep___pages_create],
 	['pages/delete', ep___pages_delete],
-	['pages/featured', ep___pages_featured],
 	['pages/like', ep___pages_like],
 	['pages/show', ep___pages_show],
 	['pages/unlike', ep___pages_unlike],
 	['pages/update', ep___pages_update],
 	['flash/create', ep___flash_create],
 	['flash/delete', ep___flash_delete],
-	['flash/featured', ep___flash_featured],
 	['flash/like', ep___flash_like],
 	['flash/show', ep___flash_show],
 	['flash/unlike', ep___flash_unlike],
@@ -697,7 +683,6 @@ const eps = [
 	['users/followers', ep___users_followers],
 	['users/following', ep___users_following],
 	['users/get-frequently-replied-users', ep___users_getFrequentlyRepliedUsers],
-	['users/featured-notes', ep___users_featuredNotes],
 	['users/lists/create', ep___users_lists_create],
 	['users/lists/delete', ep___users_lists_delete],
 	['users/lists/list', ep___users_lists_list],
@@ -714,7 +699,6 @@ const eps = [
 	['users/pages', ep___users_pages],
 	['users/flashs', ep___users_flashs],
 	['users/reactions', ep___users_reactions],
-	['users/recommendation', ep___users_recommendation],
 	['users/relation', ep___users_relation],
 	['users/report-abuse', ep___users_reportAbuse],
 	['users/search-by-username-and-host', ep___users_searchByUsernameAndHost],

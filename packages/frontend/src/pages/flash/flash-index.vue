@@ -8,10 +8,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
 	<MkSpacer :contentMax="700">
 		<MkHorizontalSwipe v-model:tab="tab" :tabs="headerTabs">
-			<div v-if="tab === 'featured'" key="featured">
-				<MkPagination v-slot="{items}" :pagination="featuredFlashsPagination">
+			<div v-if="tab === 'liked'" key="liked">
+				<MkPagination v-slot="{items}" :pagination="likedFlashsPagination">
 					<div class="_gaps_s">
-						<MkFlashPreview v-for="flash in items" :key="flash.id" :flash="flash"/>
+						<MkFlashPreview v-for="like in items" :key="like.flash.id" :flash="like.flash"/>
 					</div>
 				</MkPagination>
 			</div>
@@ -25,14 +25,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 						</div>
 					</MkPagination>
 				</div>
-			</div>
-
-			<div v-else-if="tab === 'liked'" key="liked">
-				<MkPagination v-slot="{items}" :pagination="likedFlashsPagination">
-					<div class="_gaps_s">
-						<MkFlashPreview v-for="like in items" :key="like.flash.id" :flash="like.flash"/>
-					</div>
-				</MkPagination>
 			</div>
 		</MkHorizontalSwipe>
 	</MkSpacer>
@@ -51,12 +43,8 @@ import { useRouter } from '@/router/supplier.js';
 
 const router = useRouter();
 
-const tab = ref('featured');
+const tab = ref('liked');
 
-const featuredFlashsPagination = {
-	endpoint: 'flash/featured' as const,
-	noPaging: true,
-};
 const myFlashsPagination = {
 	endpoint: 'flash/my' as const,
 	limit: 5,
@@ -77,17 +65,13 @@ const headerActions = computed(() => [{
 }]);
 
 const headerTabs = computed(() => [{
-	key: 'featured',
-	title: i18n.ts._play.featured,
-	icon: 'ti ti-flare',
+	key: 'liked',
+	title: i18n.ts._play.liked,
+	icon: 'ti ti-heart',
 }, {
 	key: 'my',
 	title: i18n.ts._play.my,
 	icon: 'ti ti-edit',
-}, {
-	key: 'liked',
-	title: i18n.ts._play.liked,
-	icon: 'ti ti-heart',
 }]);
 
 definePageMetadata(() => ({

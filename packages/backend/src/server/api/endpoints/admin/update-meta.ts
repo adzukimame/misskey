@@ -26,11 +26,6 @@ export const paramDef = {
 				type: 'string',
 			},
 		},
-		hiddenTags: {
-			type: 'array', nullable: true, items: {
-				type: 'string',
-			},
-		},
 		blockedHosts: {
 			type: 'array', nullable: true, items: {
 				type: 'string',
@@ -186,10 +181,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (Array.isArray(ps.pinnedUsers)) {
 				set.pinnedUsers = ps.pinnedUsers.filter(Boolean);
-			}
-
-			if (Array.isArray(ps.hiddenTags)) {
-				set.hiddenTags = ps.hiddenTags.filter(Boolean);
 			}
 
 			if (Array.isArray(ps.blockedHosts)) {

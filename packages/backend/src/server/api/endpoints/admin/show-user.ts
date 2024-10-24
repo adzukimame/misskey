@@ -55,10 +55,6 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
-			injectFeaturedNote: {
-				type: 'boolean',
-				optional: false, nullable: false,
-			},
 			receiveAnnouncementEmail: {
 				type: 'boolean',
 				optional: false, nullable: false,
@@ -231,7 +227,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				alwaysMarkNsfw: profile.alwaysMarkNsfw,
 				autoSensitive: profile.autoSensitive,
 				carefulBot: profile.carefulBot,
-				injectFeaturedNote: profile.injectFeaturedNote,
 				receiveAnnouncementEmail: profile.receiveAnnouncementEmail,
 				mutedWords: profile.mutedWords,
 				mutedInstances: profile.mutedInstances,
