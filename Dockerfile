@@ -43,7 +43,7 @@ RUN apt-get update \
 	&& apt-get install -yqq --no-install-recommends \
 	build-essential
 
-RUN corepack enable
+RUN npm install -g corepack@latest && corepack enable
 
 WORKDIR /misskey
 
