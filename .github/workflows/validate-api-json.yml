@@ -29,6 +29,8 @@ jobs:
         cache: 'pnpm'
     - name: Install Redocly CLI
       run: npm i -g @redocly/cli
+    - name: Install Corepack
+      run: npm install -g corepack@latest
     - name: Enable Corepack
       run: corepack enable
     - name: Install dependencies
