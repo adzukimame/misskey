@@ -39,6 +39,8 @@ jobs:
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
+    - name: Install Corepack
+      run: npm install -g corepack@latest
     - name: Enable Corepack
       run: corepack enable
     - name: Install dependencies
@@ -46,7 +48,7 @@ jobs:
     - name: Check if lock file is not modified
       run: git diff --exit-code pnpm-lock.yaml
     - name: Restore eslint cache
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4
       with:
         path: ${{ env.eslint-cache-path }}
         key: eslint-${{ env.eslint-cache-version }}-${{ matrix.workspace }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.ref_name }}-${{ github.sha }}
@@ -78,6 +80,8 @@ jobs:
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
+    - name: Install Corepack
+      run: npm install -g corepack@latest
     - name: Enable Corepack
       run: corepack enable
     - name: Install dependencies

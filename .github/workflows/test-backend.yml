@@ -57,6 +57,8 @@ jobs:
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
+    - name: Install Corepack
+      run: npm install -g corepack@latest
     - name: Enable Corepack
       run: corepack enable
     - name: Install dependencies
@@ -116,6 +118,8 @@ jobs:
         with:
           node-version-file: '.node-version'
           cache: 'pnpm'
+      - name: Install Corepack
+        run: npm install -g corepack@latest
       - name: Enable Corepack
         run: corepack enable
       - name: Install dependencies
@@ -191,6 +195,8 @@ jobs:
         with:
           node-version-file: '.node-version'
           cache: 'pnpm'
+      - name: Install Corepack
+        run: npm install -g corepack@latest
       - name: Enable Corepack
         run: corepack enable && corepack prepare
       - name: Install dependencies

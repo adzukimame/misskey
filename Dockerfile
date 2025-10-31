@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	&& apt-get install -yqq --no-install-recommends \
 	build-essential
 
-RUN corepack enable
+RUN npm install -g corepack@latest && corepack enable
 
 WORKDIR /misskey
 
@@ -43,7 +43,7 @@ RUN apt-get update \
 	&& apt-get install -yqq --no-install-recommends \
 	build-essential
 
-RUN corepack enable
+RUN npm install -g corepack@latest && corepack enable
 
 WORKDIR /misskey
 
@@ -66,6 +66,7 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	ffmpeg tini curl libjemalloc-dev libjemalloc2 \
 	&& ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so \
+  && npm install -g corepack@latest \
 	&& corepack enable \
 	&& groupadd -g "${GID}" misskey \
 	&& useradd -l -u "${UID}" -g "${GID}" -m -d /misskey misskey \
