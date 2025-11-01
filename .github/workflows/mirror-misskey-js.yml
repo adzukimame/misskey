@@ -1,8 +1,8 @@
 name: Mirror misskey-js
 
-on:
-  release:
-    types: [released]
+on: []
+  # release:
+  #   types: [released]
 
 permissions: {}
 
