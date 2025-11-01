@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: read
 
-    if: ${{ !endsWith(github.event.release.name, '.next') }}
+    if: ${{ false && !endsWith(github.event.release.name, '.next') }}
 
     steps:
     - name: Checkout

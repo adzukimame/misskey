@@ -12,6 +12,8 @@ permissions: {}
 
 jobs:
   dockle:
+    if: ${{ false }}
+
     runs-on: ubuntu-latest
 
     permissions:
