@@ -2,30 +2,34 @@ name: Publish Docker image
 
 on:
   release:
-    types: [published]
+    types: [released]
   workflow_dispatch:
 
 env:
-  REGISTRY_IMAGE: misskey/misskey
+  REGISTRY_IMAGE: adzukimame/misskey
   TAGS: |
     type=edge
-    type=ref,event=pr
-    type=ref,event=branch
     type=semver,pattern={{version}}
-    type=semver,pattern={{major}}.{{minor}}
-    type=semver,pattern={{major}}
+    type=semver,pattern={{major}}.{{minor}},enable=${{ !endsWith(github.event.release.name, '.next') }}
+    type=semver,pattern={{major}},enable=${{ !endsWith(github.event.release.name, '.next') }}
+    type=raw,value=latest,enable=${{ !endsWith(github.event.release.name, '.next') }}
 
 jobs:
   # see https://docs.docker.com/build/ci/github-actions/multi-platform/#distribute-build-across-multiple-runners
   build:
     name: Build
+
     runs-on: ubuntu-latest
+
+    if: ${{ !endsWith(github.event.release.name, '.next') }}
+
     strategy:
       fail-fast: false
       matrix:
         platform:
           - linux/amd64
           - linux/arm64
+
     steps:
       - name: Prepare
         run: |
@@ -44,8 +48,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and Push to Docker Hub
         id: build
         uses: docker/build-push-action@v5
@@ -93,8 +97,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
