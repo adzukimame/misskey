@@ -2,8 +2,7 @@ name: Publish Docker image
 
 on:
   release:
-    types: [released, prereleased]
-  workflow_dispatch:
+    types: [published]
 
 env:
   REGISTRY_IMAGE: adzukimame/misskey
