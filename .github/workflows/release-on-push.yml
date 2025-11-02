@@ -20,16 +20,21 @@ jobs:
         with:
           fetch-tags: true
           fetch-depth: 2
+
       - name: Save current version
         id: current_version
-        run: echo "current_version=$(jq -r '.version' ./package.json)" >> $GITHUB_OUTPUT
+        run: echo "current_version=$(jq -r '.version | split("+")[0]' ./package.json)" >> $GITHUB_OUTPUT
+
       - name: Checkout previous commit
         run: git checkout HEAD^
+
       - name: Save version on previous commit
         id: previous_version
-        run: echo "previous_version=$(jq -r '.version' ./package.json)" >> $GITHUB_OUTPUT
+        run: echo "previous_version=$(jq -r '.version | split("+")[0]' ./package.json)" >> $GITHUB_OUTPUT
+
       - name: Checkout main branch
         run: git checkout $(git name-rev --name-only $(git reflog -n 1 --skip=1 --pretty='%H'))
+
       - name: Check if version changed
         id: version_changed
         run: |
@@ -38,47 +43,43 @@ jobs:
         env:
           PREV_VER: ${{ steps.previous_version.outputs.previous_version }}
           CURR_VER: ${{ steps.current_version.outputs.current_version }}
-      - name: Determine new tag name
-        id: tag_name
-        run: |
-          SUFFIX=$(if [ '${{ steps.version_changed.outputs.version_changed }}' == 'true' ]; then echo ''; else echo '.next'; fi)
-          echo "tag_name=$CURR_VER$SUFFIX" >> $GITHUB_OUTPUT
-        env:
-          CURR_VER: ${{ steps.current_version.outputs.current_version }}
-      - name: Determine starting point of release note generation
-        id: notes_start_tag
-        run: |
-          START_TAG=$(if [ '${{ steps.version_changed.outputs.version_changed }}' == 'true' ]; then echo "$PREV_VER"; else echo "$CURR_VER"; fi)
-          echo "notes_start_tag=$START_TAG" >> $GITHUB_OUTPUT
-        env:
-          PREV_VER: ${{ steps.previous_version.outputs.previous_version }}
-          CURR_VER: ${{ steps.current_version.outputs.current_version }}
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.3
         with:
           node-version-file: '.node-version'
           cache: 'pnpm'
+
       - name: Install Corepack
         run: npm install -g corepack@latest
+
       - name: Enable Corepack
         run: corepack enable
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
       - name: Check if lock file is not modified
         run: git diff --exit-code pnpm-lock.yaml
+
       - name: Build
         run: pnpm run build
         env:
           NODE_ENV: production
+
       - name: Note latest commit hash
         run: git rev-parse HEAD > ./built/hash
+
       - name: Archive (tar)
         run: tar -zcvf ./built.tar.gz ./built ./packages/misskey-js/built ./packages/backend/built
+
       - name: Get repository name
         id: repository-name
         run: echo "name=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_OUTPUT
+
       - name: Get GitHub App Token
         uses: actions/create-github-app-token@v1
         id: app-token
@@ -88,23 +89,28 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: |
             ${{ steps.repository-name.outputs.name }}
-      - name: Remove existing release and tag
+
+      # on version not changed
+      - name: Remove existing edge release and tag
         if: ${{ steps.version_changed.outputs.version_changed == 'false' }}
         run: |
-          if gh release delete "$TAG_NAME" -y --cleanup-tag; then : ; else : ; fi
+          gh release delete "edge" -y --cleanup-tag || true
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          TAG_NAME: ${{ steps.tag_name.outputs.tag_name }}
-      - name: Remove existing release and tag
+
+      # on version not changed
+      - name: Create edge release
+        if: ${{ steps.version_changed.outputs.version_changed == 'false' }}
+        run: gh release create "edge" ./built.tar.gz --prerelease --generate-notes --notes-start-tag "$NOTES_START_TAG"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          NOTES_START_TAG: ${{ steps.current_version.outputs.current_version }}
+
+      # on version changed
+      - name: Create versioned release
         if: ${{ steps.version_changed.outputs.version_changed == 'true' }}
-        run: |
-          if gh release delete "$PREV_RELEASE" -y --cleanup-tag; then : ; else : ; fi
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          PREV_RELEASE: ${{ steps.previous_version.outputs.previous_version }}.next
-      - name: Create release
         run: gh release create "$TAG_NAME" ./built.tar.gz --latest --generate-notes --notes-start-tag "$NOTES_START_TAG"
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          TAG_NAME: ${{ steps.tag_name.outputs.tag_name }}
-          NOTES_START_TAG: ${{ steps.notes_start_tag.outputs.notes_start_tag }}
+          TAG_NAME: ${{ steps.current_version.outputs.current_version }}
+          NOTES_START_TAG: ${{ steps.previous_version.outputs.previous_version }}

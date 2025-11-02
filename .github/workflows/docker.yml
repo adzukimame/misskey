@@ -2,17 +2,17 @@ name: Publish Docker image
 
 on:
   release:
-    types: [released]
+    types: [released, prereleased]
   workflow_dispatch:
 
 env:
   REGISTRY_IMAGE: adzukimame/misskey
   TAGS: |
-    type=edge
-    type=semver,pattern={{version}}
-    type=semver,pattern={{major}}.{{minor}},enable=${{ !endsWith(github.event.release.name, '.next') }}
-    type=semver,pattern={{major}},enable=${{ !endsWith(github.event.release.name, '.next') }}
-    type=raw,value=latest,enable=${{ !endsWith(github.event.release.name, '.next') }}
+    type=raw,value=edge
+    type=semver,pattern={{major}}.{{minor}}.{{patch}},enable=${{ github.event.release.name != 'edge' && !contains(github.event.release.name, '-') }}
+    type=semver,pattern={{major}}.{{minor}},enable=${{ github.event.release.name != 'edge' && !contains(github.event.release.name, '-') }}
+    type=semver,pattern={{major}},enable=${{ github.event.release.name != 'edge' && !contains(github.event.release.name, '-') }}
+    type=raw,value=latest,enable=${{ github.event.release.name != 'edge' && !contains(github.event.release.name, '-') }}
 
 jobs:
   # see https://docs.docker.com/build/ci/github-actions/multi-platform/#distribute-build-across-multiple-runners
