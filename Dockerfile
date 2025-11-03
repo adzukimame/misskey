@@ -59,8 +59,8 @@ RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
 
 FROM --platform=$TARGETPLATFORM node:${NODE_VERSION}-slim AS runner
 
-ARG UID="991"
-ARG GID="991"
+ARG UID="13616"
+ARG GID="13616"
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
