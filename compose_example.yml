@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    restart: always
+    restart: unless-stopped
     links:
       - db
       - redis
@@ -17,11 +17,16 @@ services:
     networks:
       - internal_network
       - external_network
-    # env_file:
-    #   - .config/docker.env
+    env_file:
+      - .config/docker.env
     volumes:
       - ./files:/misskey/files
       - ./.config:/misskey/.config:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 10
 
   redis:
     restart: always
@@ -34,6 +39,11 @@ services:
       test: "redis-cli ping"
       interval: 5s
       retries: 20
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 10
 
   db:
     restart: always
@@ -48,6 +58,11 @@ services:
       test: "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"
       interval: 5s
       retries: 20
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 10
 
 #  mcaptcha:
 #    restart: always
@@ -69,6 +84,11 @@ services:
 #        condition: service_healthy
 #      mcaptcha_redis:
 #        condition: service_healthy
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: 10m
+#        max-file: 10
 #
 #  mcaptcha_redis:
 #    image: mcaptcha/cache:latest
@@ -78,6 +98,11 @@ services:
 #      test: "redis-cli ping"
 #      interval: 5s
 #      retries: 20
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: 10m
+#        max-file: 10
 
 #  meilisearch:
 #    restart: always
@@ -91,6 +116,11 @@ services:
 #      - internal_network
 #    volumes:
 #      - ./meili_data:/meili_data
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: 10m
+#        max-file: 10
 
 networks:
   internal_network:
