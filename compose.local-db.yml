@@ -12,6 +12,11 @@ services:
       test: "redis-cli ping"
       interval: 5s
       retries: 20
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 10
 
   db:
     restart: always
@@ -26,6 +31,11 @@ services:
       test: "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"
       interval: 5s
       retries: 20
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 10
 
 #  meilisearch:
 #    restart: always
@@ -37,4 +47,8 @@ services:
 #      - .config/meilisearch.env
 #    volumes:
 #      - ./meili_data:/meili_data
-
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: 10m
+#        max-file: 10

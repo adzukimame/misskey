@@ -266,7 +266,10 @@ id: 'aidx'
 #outgoingAddressFamily: ipv4
 
 # Proxy for HTTP/HTTPS
-#proxy: http://127.0.0.1:3128
+#proxy:
+#  protocol: "http:"
+#  hostname: "127.0.0.1"
+#  port: 3128
 
 proxyBypassHosts:
   - api.deepl.com
@@ -311,3 +314,13 @@ signToActivityPubGet: true
 
 # PID File of master process
 #pidFile: /tmp/misskey.pid
+
+# Customize Content-Security-Policy header
+#contentSecurityPolicy:
+#  imgAndMediaSrc:
+#    - https://example.com
+#  frameSrc:
+#    - "https:"
+
+# Cloudflare Web Analytics token
+#cfWebAnalyticsToken: cafedead
