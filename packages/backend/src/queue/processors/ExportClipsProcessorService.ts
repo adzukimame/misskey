@@ -7,7 +7,6 @@ import * as fs from 'node:fs';
 import { Writable } from 'node:stream';
 import { Inject, Injectable, StreamableFile } from '@nestjs/common';
 import { MoreThan } from 'typeorm';
-import { format as dateFormat } from 'date-fns';
 import { DI } from '@/di-symbols.js';
 import type { ClipNotesRepository, ClipsRepository, MiClip, MiClipNote, MiUser, NotesRepository, PollsRepository, UsersRepository } from '@/models/_.js';
 import type Logger from '@/logger.js';
@@ -16,6 +15,7 @@ import { createTemp } from '@/misc/create-temp.js';
 import type { MiPoll } from '@/models/Poll.js';
 import type { MiNote } from '@/models/Note.js';
 import { bindThis } from '@/decorators.js';
+import { formatDateTimeForFilename } from '@/misc/date-format.js';
 import { DriveFileEntityService } from '@/core/entities/DriveFileEntityService.js';
 import { Packed } from '@/misc/json-schema.js';
 import { IdService } from '@/core/IdService.js';
@@ -75,7 +75,7 @@ export class ExportClipsProcessorService {
 
 			this.logger.succ(`Exported to: ${path}`);
 
-			const fileName = 'clips-' + dateFormat(new Date(), 'yyyy-MM-dd-HH-mm-ss') + '.json';
+			const fileName = 'clips-' + formatDateTimeForFilename(new Date()) + '.json';
 			const driveFile = await this.driveService.addFile({ user, path, name: fileName, force: true, ext: 'json' });
 
 			this.logger.succ(`Exported to: ${driveFile.id}`);

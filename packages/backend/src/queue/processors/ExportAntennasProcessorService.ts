@@ -5,7 +5,6 @@
 
 import fs from 'node:fs';
 import { Inject, Injectable } from '@nestjs/common';
-import { format as DateFormat } from 'date-fns';
 import { In } from 'typeorm';
 import { DI } from '@/di-symbols.js';
 import type { AntennasRepository, UsersRepository, UserListMembershipsRepository, MiUser } from '@/models/_.js';
@@ -14,6 +13,7 @@ import { DriveService } from '@/core/DriveService.js';
 import { bindThis } from '@/decorators.js';
 import { createTemp } from '@/misc/create-temp.js';
 import { UtilityService } from '@/core/UtilityService.js';
+import { formatDateTimeForFilename } from '@/misc/date-format.js';
 import { QueueLoggerService } from '../QueueLoggerService.js';
 import type { DBExportAntennasData } from '../types.js';
 import type * as Bull from 'bullmq';
@@ -92,7 +92,7 @@ export class ExportAntennasProcessorService {
 			write(']');
 			stream.end();
 
-			const fileName = 'antennas-' + DateFormat(new Date(), 'yyyy-MM-dd-HH-mm-ss') + '.json';
+			const fileName = 'antennas-' + formatDateTimeForFilename(new Date()) + '.json';
 			const driveFile = await this.driveService.addFile({ user, path, name: fileName, force: true, ext: 'json' });
 			this.logger.succ('Exported to: ' + driveFile.id);
 		} finally {

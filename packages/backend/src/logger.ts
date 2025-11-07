@@ -6,7 +6,7 @@
 import cluster from 'node:cluster';
 import chalk from 'chalk';
 import { default as convertColor } from 'color-convert';
-import { format as dateFormat, formatISO } from 'date-fns';
+import { formatTime } from '@/misc/date-format.js';
 import { bindThis } from '@/decorators.js';
 import { envOption } from './env.js';
 import type { KEYWORD } from 'color-convert/conversions.js';
@@ -59,10 +59,8 @@ export default class Logger {
 				}
 			}
 
-			const d = new Date();
-
 			console.log(JSON.stringify({
-				time: formatISO(d).replace(/^([^Z\+]+)(Z|\+[0-9:]+)$/, `$1.${d.getMilliseconds().toString().padStart(3, '0')}$2`),
+				time: new Date().toISOString(),
 				level: level,
 				worker: cluster.isPrimary ? '*' : `${cluster.worker!.id}`,
 				context: [this.context.name].concat(subContexts.map(c => c.name)).join('.'),
@@ -73,9 +71,9 @@ export default class Logger {
 			return;
 		}
 
-		const time = dateFormat(new Date(), 'HH:mm:ss');
+		const time = formatTime(new Date());
 		const worker = cluster.isPrimary ? '*' : cluster.worker!.id;
-		const l =
+		const colorizedLevel =
 			level === 'error' ? important ? chalk.bgRed.white('ERR ') : chalk.red('ERR ') :
 			level === 'warning' ? chalk.yellow('WARN') :
 			level === 'success' ? important ? chalk.bgGreen.white('DONE') : chalk.green('DONE') :
@@ -83,7 +81,7 @@ export default class Logger {
 			level === 'info' ? chalk.blue('INFO') :
 			null;
 		const contexts = [this.context].concat(subContexts).map(d => d.color ? chalk.rgb(...convertColor.keyword.rgb(d.color))(d.name) : chalk.white(d.name));
-		const m =
+		const colorizedMessage =
 			level === 'error' ? chalk.red(message) :
 			level === 'warning' ? chalk.yellow(message) :
 			level === 'success' ? chalk.green(message) :
@@ -91,7 +89,7 @@ export default class Logger {
 			level === 'info' ? message :
 			null;
 
-		let log = `${l} ${worker}\t[${contexts.join(' ')}]\t${m}`;
+		let log = `${colorizedLevel} ${worker}\t[${contexts.join(' ')}]\t${colorizedMessage}`;
 		if (envOption.withLogTime) log = chalk.gray(time) + ' ' + log;
 
 		const args: unknown[] = [important ? chalk.bold(log) : log];
