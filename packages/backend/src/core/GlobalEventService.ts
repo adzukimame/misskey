@@ -24,7 +24,6 @@ import { bindThis } from '@/decorators.js';
 import { Serialized } from '@/types.js';
 import type Emitter from 'strict-event-emitter-types';
 import type { EventEmitter } from 'events';
-import { string } from '@tensorflow/tfjs-node';
 
 //#region Stream type-body definitions
 export interface BroadcastTypes {
