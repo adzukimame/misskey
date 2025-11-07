@@ -6,7 +6,6 @@
 import * as fs from 'node:fs';
 import { Inject, Injectable } from '@nestjs/common';
 import { In, MoreThan, Not } from 'typeorm';
-import { format as dateFormat } from 'date-fns';
 import { DI } from '@/di-symbols.js';
 import type { UsersRepository, FollowingsRepository, MutingsRepository } from '@/models/_.js';
 import type Logger from '@/logger.js';
@@ -15,6 +14,7 @@ import { createTemp } from '@/misc/create-temp.js';
 import type { MiFollowing } from '@/models/Following.js';
 import { UtilityService } from '@/core/UtilityService.js';
 import { bindThis } from '@/decorators.js';
+import { formatDateTimeForFilename } from '@/misc/date-format.js';
 import { QueueLoggerService } from '../QueueLoggerService.js';
 import type * as Bull from 'bullmq';
 import type { DbExportFollowingData } from '../types.js';
@@ -109,7 +109,7 @@ export class ExportFollowingProcessorService {
 			stream.end();
 			this.logger.succ(`Exported to: ${path}`);
 
-			const fileName = 'following-' + dateFormat(new Date(), 'yyyy-MM-dd-HH-mm-ss') + '.csv';
+			const fileName = 'following-' + formatDateTimeForFilename(new Date()) + '.csv';
 			const driveFile = await this.driveService.addFile({ user, path, name: fileName, force: true, ext: 'csv' });
 
 			this.logger.succ(`Exported to: ${driveFile.id}`);

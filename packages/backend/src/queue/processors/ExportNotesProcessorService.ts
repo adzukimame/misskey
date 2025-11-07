@@ -6,7 +6,6 @@
 import { ReadableStream, TextEncoderStream } from 'node:stream/web';
 import { Inject, Injectable } from '@nestjs/common';
 import { MoreThan } from 'typeorm';
-import { format as dateFormat } from 'date-fns';
 import { DI } from '@/di-symbols.js';
 import type { NotesRepository, PollsRepository, UsersRepository } from '@/models/_.js';
 import type Logger from '@/logger.js';
@@ -20,6 +19,7 @@ import { Packed } from '@/misc/json-schema.js';
 import { IdService } from '@/core/IdService.js';
 import { JsonArrayStream } from '@/misc/JsonArrayStream.js';
 import { FileWriterStream } from '@/misc/FileWriterStream.js';
+import { formatDateTimeForFilename } from '@/misc/date-format.js';
 import { QueueLoggerService } from '../QueueLoggerService.js';
 import type * as Bull from 'bullmq';
 import type { DbJobDataWithUser } from '../types.js';
@@ -146,7 +146,7 @@ export class ExportNotesProcessorService {
 
 			this.logger.succ(`Exported to: ${path}`);
 
-			const fileName = 'notes-' + dateFormat(new Date(), 'yyyy-MM-dd-HH-mm-ss') + '.json';
+			const fileName = 'notes-' + formatDateTimeForFilename(new Date()) + '.json';
 			const driveFile = await this.driveService.addFile({ user, path, name: fileName, force: true, ext: 'json' });
 
 			this.logger.succ(`Exported to: ${driveFile.id}`);
