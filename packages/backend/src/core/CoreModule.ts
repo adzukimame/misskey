@@ -8,7 +8,6 @@ import { FanoutTimelineEndpointService } from '@/core/FanoutTimelineEndpointServ
 import { UserSearchService } from '@/core/UserSearchService.js';
 import { AccountMoveService } from './AccountMoveService.js';
 import { AccountUpdateService } from './AccountUpdateService.js';
-import { AiService } from './AiService.js';
 import { AntennaService } from './AntennaService.js';
 import { AppLockService } from './AppLockService.js';
 import { CaptchaService } from './CaptchaService.js';
@@ -57,6 +56,7 @@ import { UserWebhookService } from './UserWebhookService.js';
 import { ProxyAccountService } from './ProxyAccountService.js';
 import { UtilityService } from './UtilityService.js';
 import { FileInfoService } from './FileInfoService.js';
+import { SensitivityDetectionService } from './SensitivityDetectionService.js';
 import { SearchService } from './SearchService.js';
 import { ClipService } from './ClipService.js';
 import { FanoutTimelineService } from './FanoutTimelineService.js';
@@ -126,7 +126,6 @@ import type { Provider } from '@nestjs/common';
 const $LoggerService: Provider = { provide: 'LoggerService', useExisting: LoggerService };
 const $AccountMoveService: Provider = { provide: 'AccountMoveService', useExisting: AccountMoveService };
 const $AccountUpdateService: Provider = { provide: 'AccountUpdateService', useExisting: AccountUpdateService };
-const $AiService: Provider = { provide: 'AiService', useExisting: AiService };
 const $AntennaService: Provider = { provide: 'AntennaService', useExisting: AntennaService };
 const $AppLockService: Provider = { provide: 'AppLockService', useExisting: AppLockService };
 const $CaptchaService: Provider = { provide: 'CaptchaService', useExisting: CaptchaService };
@@ -176,6 +175,7 @@ const $VideoProcessingService: Provider = { provide: 'VideoProcessingService', u
 const $UserWebhookService: Provider = { provide: 'UserWebhookService', useExisting: UserWebhookService };
 const $UtilityService: Provider = { provide: 'UtilityService', useExisting: UtilityService };
 const $FileInfoService: Provider = { provide: 'FileInfoService', useExisting: FileInfoService };
+const $SensitivityDetectionService: Provider = { provide: 'SensitivityDetectionService', useExisting: SensitivityDetectionService };
 const $SearchService: Provider = { provide: 'SearchService', useExisting: SearchService };
 const $ClipService: Provider = { provide: 'ClipService', useExisting: ClipService };
 const $FanoutTimelineService: Provider = { provide: 'FanoutTimelineService', useExisting: FanoutTimelineService };
@@ -247,7 +247,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		LoggerService,
 		AccountMoveService,
 		AccountUpdateService,
-		AiService,
 		AntennaService,
 		AppLockService,
 		CaptchaService,
@@ -297,6 +296,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		UserWebhookService,
 		UtilityService,
 		FileInfoService,
+		SensitivityDetectionService,
 		SearchService,
 		ClipService,
 		FanoutTimelineService,
@@ -364,7 +364,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$LoggerService,
 		$AccountMoveService,
 		$AccountUpdateService,
-		$AiService,
 		$AntennaService,
 		$AppLockService,
 		$CaptchaService,
@@ -414,6 +413,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$UserWebhookService,
 		$UtilityService,
 		$FileInfoService,
+		$SensitivityDetectionService,
 		$SearchService,
 		$ClipService,
 		$FanoutTimelineService,
@@ -482,7 +482,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		LoggerService,
 		AccountMoveService,
 		AccountUpdateService,
-		AiService,
 		AntennaService,
 		AppLockService,
 		CaptchaService,
@@ -532,6 +531,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		UserWebhookService,
 		UtilityService,
 		FileInfoService,
+		SensitivityDetectionService,
 		SearchService,
 		ClipService,
 		FanoutTimelineService,
@@ -598,7 +598,6 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$LoggerService,
 		$AccountMoveService,
 		$AccountUpdateService,
-		$AiService,
 		$AntennaService,
 		$AppLockService,
 		$CaptchaService,
@@ -648,6 +647,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$UserWebhookService,
 		$UtilityService,
 		$FileInfoService,
+		$SensitivityDetectionService,
 		$SearchService,
 		$ClipService,
 		$FanoutTimelineService,

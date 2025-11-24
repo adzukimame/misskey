@@ -1827,6 +1827,8 @@ _sensitiveMediaDetection:
   setSensitiveFlagAutomaticallyDescription: "この設定をオフにしても内部的に判定結果は保持されます。"
   analyzeVideos: "動画の解析を有効化"
   analyzeVideosDescription: "静止画に加えて動画も解析するようにします。サーバーの負荷が少し増えます。"
+  sensitivityDetectionServiceUrl: "センシティビティ判定を行うサービスのエンドポイント"
+  sensitivityDetectionServiceUrlDescription: "Misskey本体ではなく、外部サービスを使用してセンシティビティ判定を行います。"
 
 _emailUnavailable:
   used: "既に使用されています"

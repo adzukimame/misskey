@@ -1811,6 +1811,8 @@ _sensitiveMediaDetection:
   setSensitiveFlagAutomaticallyDescription: "The results of the internal detection will be retained even if this option is turned off."
   analyzeVideos: "Enable analysis of videos"
   analyzeVideosDescription: "Analyzes videos in addition to images. This will slightly increase the load on the server."
+  sensitivityDetectionServiceUrl: "Service endpoints that detect sensitive media"
+  sensitivityDetectionServiceUrlDescription: "Not Misskey itself, but detect sensitive media using external services"
 _emailUnavailable:
   used: "This email address is already being used"
   format: "The format of this email address is invalid"

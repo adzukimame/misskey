@@ -61,6 +61,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 						</MkSwitch>
 						-->
 
+						<MkInput v-model="sensitivityDetectionServiceUrl" type="text">
+							<template #label>{{ i18n.ts._sensitiveMediaDetection.sensitivityDetectionServiceUrl }}</template>
+							<template #caption>[{{ i18n.ts.notUsePleaseLeaveBlank }}] {{ i18n.ts._sensitiveMediaDetection.sensitivityDetectionServiceUrlDescription }}</template>
+						</MkInput>
+
 						<MkButton primary @click="save"><i class="ti ti-device-floppy"></i> {{ i18n.ts.save }}</MkButton>
 					</div>
 				</MkFolder>
@@ -153,6 +158,7 @@ const sensitiveMediaDetection = ref<AdminUpdateMetaRequest['sensitiveMediaDetect
 const sensitiveMediaDetectionSensitivity = ref<0 | 1 | 2 | 3 | 4>(0);
 const setSensitiveFlagAutomatically = ref<boolean>(false);
 const enableSensitiveMediaDetectionForVideos = ref<boolean>(false);
+const sensitivityDetectionServiceUrl = ref<string | null>(null);
 const enableIpLogging = ref<boolean>(false);
 const enableActiveEmailValidation = ref<boolean>(false);
 const enableVerifymailApi = ref<boolean>(false);
@@ -178,6 +184,7 @@ async function init() {
 		meta.sensitiveMediaDetectionSensitivity === 'veryHigh' ? 4 : 0;
 	setSensitiveFlagAutomatically.value = meta.setSensitiveFlagAutomatically;
 	enableSensitiveMediaDetectionForVideos.value = meta.enableSensitiveMediaDetectionForVideos;
+	sensitivityDetectionServiceUrl.value = meta.sensitivityDetectionServiceUrl;
 	enableIpLogging.value = meta.enableIpLogging;
 	enableActiveEmailValidation.value = meta.enableActiveEmailValidation;
 	enableVerifymailApi.value = meta.enableVerifymailApi;
@@ -199,6 +206,7 @@ function save() {
 			'veryHigh',
 		setSensitiveFlagAutomatically: setSensitiveFlagAutomatically.value,
 		enableSensitiveMediaDetectionForVideos: enableSensitiveMediaDetectionForVideos.value,
+		sensitivityDetectionServiceUrl: sensitivityDetectionServiceUrl.value,
 		enableIpLogging: enableIpLogging.value,
 		enableActiveEmailValidation: enableActiveEmailValidation.value,
 		enableVerifymailApi: enableVerifymailApi.value,

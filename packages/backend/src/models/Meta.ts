@@ -287,6 +287,12 @@ export class MiMeta {
 	})
 	public enableSensitiveMediaDetectionForVideos: boolean;
 
+	@Column('varchar', {
+		length: 1024,
+		nullable: true,
+	})
+	public sensitivityDetectionServiceUrl: string | null;
+
 	@Column('boolean', {
 		default: false,
 	})
