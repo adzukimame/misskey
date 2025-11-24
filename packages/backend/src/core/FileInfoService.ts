@@ -33,8 +33,6 @@ export type FileInfo = {
 	height?: number;
 	orientation?: number;
 	blurhash?: string;
-	sensitive: boolean;
-	porn: boolean;
 	warnings: string[];
 };
 
@@ -63,12 +61,7 @@ export class FileInfoService {
 	 * Get file information
 	 */
 	@bindThis
-	public async getFileInfo(path: string, opts: {
-		skipSensitiveDetection: boolean;
-		sensitiveThreshold?: number;
-		sensitiveThresholdForPorn?: number;
-		enableSensitiveMediaDetectionForVideos?: boolean;
-	}): Promise<FileInfo> {
+	public async getFileInfo(path: string, opts: Record<string, never>): Promise<FileInfo> {
 		const warnings = [] as string[];
 
 		const size = await this.getFileSize(path);
@@ -134,23 +127,6 @@ export class FileInfoService {
 			});
 		}
 
-		let sensitive = false;
-		let porn = false;
-
-		if (!opts.skipSensitiveDetection) {
-			await this.detectSensitivity(
-				path,
-				type.mime,
-				opts.sensitiveThreshold ?? 0.5,
-				opts.sensitiveThresholdForPorn ?? 0.75,
-				opts.enableSensitiveMediaDetectionForVideos ?? false,
-			).then(value => {
-				[sensitive, porn] = value;
-			}, error => {
-				warnings.push(`detectSensitivity failed: ${error}`);
-			});
-		}
-
 		return {
 			size,
 			md5,
@@ -159,14 +135,12 @@ export class FileInfoService {
 			height,
 			orientation,
 			blurhash,
-			sensitive,
-			porn,
 			warnings,
 		};
 	}
 
 	@bindThis
-	private async detectSensitivity(source: string, mime: string, sensitiveThreshold: number, sensitiveThresholdForPorn: number, analyzeVideo: boolean): Promise<[sensitive: boolean, porn: boolean]> {
+	public async detectSensitivity(source: string, mime: string, sensitiveThreshold: number, sensitiveThresholdForPorn: number, analyzeVideo: boolean): Promise<[sensitive: boolean, porn: boolean]> {
 		let sensitive = false;
 		let porn = false;
 
