@@ -7072,6 +7072,14 @@ export interface Locale extends ILocale {
          * 静止画に加えて動画も解析するようにします。サーバーの負荷が少し増えます。
          */
         "analyzeVideosDescription": string;
+        /**
+         * センシティビティ判定を行うサービスのエンドポイント
+         */
+        "sensitivityDetectionServiceUrl": string;
+        /**
+         * Misskey本体ではなく、外部サービスを使用してセンシティビティ判定を行います。
+         */
+        "sensitivityDetectionServiceUrlDescription": string;
     };
     "_emailUnavailable": {
         /**
