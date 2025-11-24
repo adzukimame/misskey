@@ -36,6 +36,7 @@ import { InternalStorageService } from '@/core/InternalStorageService.js';
 import { DriveFileEntityService } from '@/core/entities/DriveFileEntityService.js';
 import { UserEntityService } from '@/core/entities/UserEntityService.js';
 import { FileInfoService } from '@/core/FileInfoService.js';
+import { SensitivityDetectionService } from '@/core/SensitivityDetectionService.js';
 import { bindThis } from '@/decorators.js';
 import { RoleService } from '@/core/RoleService.js';
 import { correctFilename } from '@/misc/correct-filename.js';
@@ -112,6 +113,7 @@ export class DriveService {
 		private driveFoldersRepository: DriveFoldersRepository,
 
 		private fileInfoService: FileInfoService,
+		private sensitivityDetectionService: SensitivityDetectionService,
 		private userEntityService: UserEntityService,
 		private driveFileEntityService: DriveFileEntityService,
 		private idService: IdService,
@@ -142,7 +144,7 @@ export class DriveService {
 	 * @param size Size for original
 	 */
 	@bindThis
-	private async save(file: MiDriveFile, path: string, name: string, type: string, hash: string, size: number, opts?: { detectSensitivity?: boolean, setSensitiveFlagIfDetected?: boolean, sensitiveThreshold?: number, sensitiveThresholdForPorn?: number }): Promise<MiDriveFile> {
+	private async save(file: MiDriveFile, path: string, name: string, type: string, hash: string, size: number, opts?: { detectSensitivity?: boolean, setSensitiveFlagIfDetected?: boolean }): Promise<MiDriveFile> {
 	// thunbnail, webpublic を必要なら生成
 		const alts = await this.generateAlts(path, type, !file.uri);
 
@@ -187,16 +189,11 @@ export class DriveService {
 
 			const sensitivityDetection = !opts?.detectSensitivity
 				? Promise.resolve([false, false])
-				:	uploads[0].then(() => this.fileInfoService.detectSensitivity(
-					path,
-					type,
-					opts.sensitiveThreshold ?? 0.5,
-					opts.sensitiveThresholdForPorn ?? 0.75,
-					this.meta.enableSensitiveMediaDetectionForVideos,
-				).catch(error => {
-					this.registerLogger.warn(`detectSensitivity failed ${file.id}`, error);
-					return [false, false];
-				}));
+				:	uploads[0].then(() => this.sensitivityDetectionService.detectSensitivity(url)
+					.catch(error => {
+						this.registerLogger.warn(`detectSensitivity failed ${file.id}`, error);
+						return [false, false] as [boolean, boolean];
+					}));
 
 			if (alts.webpublic) {
 				webpublicKey = `${this.meta.objectStoragePrefix}/webpublic-${randomUUID()}.${alts.webpublic.ext}`;
@@ -243,19 +240,6 @@ export class DriveService {
 
 			const url = this.internalStorageService.saveFromPath(accessKey, path);
 
-			const sensitivityDetection = !opts?.detectSensitivity
-				? Promise.resolve([false, false])
-				:	this.fileInfoService.detectSensitivity(
-					path,
-					type,
-					opts.sensitiveThreshold ?? 0.5,
-					opts.sensitiveThresholdForPorn ?? 0.75,
-					this.meta.enableSensitiveMediaDetectionForVideos,
-				).catch(error => {
-					this.registerLogger.warn(`detectSensitivity failed ${file.id}`, error);
-					return [false, false];
-				});
-
 			let thumbnailUrl: string | null = null;
 			let webpublicUrl: string | null = null;
 
@@ -282,12 +266,29 @@ export class DriveService {
 			file.md5 = hash;
 			file.size = size;
 
-			const [detectedAsSensitive, detectedAsPorn] = await sensitivityDetection;
-			file.maybeSensitive = detectedAsSensitive;
-			file.maybePorn = detectedAsPorn;
-			if (detectedAsSensitive && opts?.setSensitiveFlagIfDetected) file.isSensitive = true;
+			const savedFile = await this.driveFilesRepository.insertOne(file);
 
-			return await this.driveFilesRepository.insertOne(file);
+			if (opts?.detectSensitivity) {
+				const [detectedAsSensitive, detectedAsPorn] = await this.sensitivityDetectionService.detectSensitivity(url)
+					.catch(error => {
+						this.registerLogger.warn(`detectSensitivity failed ${file.id}`, error);
+						return [false, false] as [boolean, boolean];
+					});
+
+				if (detectedAsSensitive || detectedAsPorn) {
+					savedFile.maybeSensitive = detectedAsSensitive;
+					savedFile.maybePorn = detectedAsPorn;
+					if (detectedAsSensitive && opts.setSensitiveFlagIfDetected) savedFile.isSensitive = true;
+
+					await this.driveFilesRepository.update(savedFile.id, {
+						maybeSensitive: savedFile.maybeSensitive,
+						maybePorn: savedFile.maybePorn,
+						isSensitive: savedFile.isSensitive,
+					});
+				}
+			}
+
+			return savedFile;
 		}
 	}
 
@@ -499,14 +500,6 @@ export class DriveService {
 		if (user && this.meta.sensitiveMediaDetection === 'local' && this.userEntityService.isRemoteUser(user)) skipNsfwCheck = true;
 		if (user && this.meta.sensitiveMediaDetection === 'remote' && this.userEntityService.isLocalUser(user)) skipNsfwCheck = true;
 
-		// 感度が高いほどしきい値は低くすることになる
-		const sensitiveThreshold = this.meta.sensitiveMediaDetectionSensitivity === 'veryHigh' ? 0.1 :
-			this.meta.sensitiveMediaDetectionSensitivity === 'high' ? 0.3 :
-			this.meta.sensitiveMediaDetectionSensitivity === 'low' ? 0.7 :
-			this.meta.sensitiveMediaDetectionSensitivity === 'veryLow' ? 0.9 :
-			0.5;
-		const sensitiveThresholdForPorn = 0.75;
-
 		const info = await this.fileInfoService.getFileInfo(path, {});
 		this.registerLogger.info(`${JSON.stringify(info)}`);
 
@@ -643,18 +636,13 @@ export class DriveService {
 				let detectedAsSensitive = false;
 				let detectedAsPorn = false;
 
-				if (!skipNsfwCheck) {
-					await this.fileInfoService.detectSensitivity(
-						path,
-						info.type.mime,
-						sensitiveThreshold,
-						sensitiveThresholdForPorn,
-						this.meta.enableSensitiveMediaDetectionForVideos,
-					).then(value => {
-						[detectedAsSensitive, detectedAsPorn] = value;
-					}, error => {
-						this.registerLogger.warn(`detectSensitivity failed ${file.id}`, error);
-					});
+				if (!skipNsfwCheck && file.url) {
+					await this.sensitivityDetectionService.detectSensitivity(file.url)
+						.then(value => {
+							[detectedAsSensitive, detectedAsPorn] = value;
+						}, error => {
+							this.registerLogger.warn(`detectSensitivity failed ${file.id}`, error);
+						});
 				}
 
 				file.maybeSensitive = detectedAsSensitive;
@@ -683,8 +671,6 @@ export class DriveService {
 				{
 					detectSensitivity: !skipNsfwCheck,
 					setSensitiveFlagIfDetected: profile!.autoSensitive || this.meta.setSensitiveFlagAutomatically,
-					sensitiveThreshold,
-					sensitiveThresholdForPorn,
 				},
 			));
 		}

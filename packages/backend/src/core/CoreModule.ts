@@ -57,6 +57,7 @@ import { UserWebhookService } from './UserWebhookService.js';
 import { ProxyAccountService } from './ProxyAccountService.js';
 import { UtilityService } from './UtilityService.js';
 import { FileInfoService } from './FileInfoService.js';
+import { SensitivityDetectionService } from './SensitivityDetectionService.js';
 import { SearchService } from './SearchService.js';
 import { ClipService } from './ClipService.js';
 import { FanoutTimelineService } from './FanoutTimelineService.js';
@@ -176,6 +177,7 @@ const $VideoProcessingService: Provider = { provide: 'VideoProcessingService', u
 const $UserWebhookService: Provider = { provide: 'UserWebhookService', useExisting: UserWebhookService };
 const $UtilityService: Provider = { provide: 'UtilityService', useExisting: UtilityService };
 const $FileInfoService: Provider = { provide: 'FileInfoService', useExisting: FileInfoService };
+const $SensitivityDetectionService: Provider = { provide: 'SensitivityDetectionService', useExisting: SensitivityDetectionService };
 const $SearchService: Provider = { provide: 'SearchService', useExisting: SearchService };
 const $ClipService: Provider = { provide: 'ClipService', useExisting: ClipService };
 const $FanoutTimelineService: Provider = { provide: 'FanoutTimelineService', useExisting: FanoutTimelineService };
@@ -297,6 +299,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		UserWebhookService,
 		UtilityService,
 		FileInfoService,
+		SensitivityDetectionService,
 		SearchService,
 		ClipService,
 		FanoutTimelineService,
@@ -414,6 +417,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$UserWebhookService,
 		$UtilityService,
 		$FileInfoService,
+		$SensitivityDetectionService,
 		$SearchService,
 		$ClipService,
 		$FanoutTimelineService,
@@ -532,6 +536,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		UserWebhookService,
 		UtilityService,
 		FileInfoService,
+		SensitivityDetectionService,
 		SearchService,
 		ClipService,
 		FanoutTimelineService,
@@ -648,6 +653,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$UserWebhookService,
 		$UtilityService,
 		$FileInfoService,
+		$SensitivityDetectionService,
 		$SearchService,
 		$ClipService,
 		$FanoutTimelineService,
