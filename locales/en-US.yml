@@ -2722,3 +2722,8 @@ _embedCodeGen:
   generateCode: "Generate embed code"
   codeGenerated: "The code has been generated"
   codeGeneratedDescription: "Paste the generated code into your website to embed the content."
+
+_cloudflareChallenges:
+  verificationRequired: "Security Verification"
+  verificationDescription: "Please complete the security verification to continue."
+  verificationCompleted: "Security verification completed. Please try again."

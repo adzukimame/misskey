@@ -2778,3 +2778,8 @@ _contextMenu:
   app: "アプリケーション"
   appWithShift: "Shiftキーでアプリケーション"
   native: "ブラウザのUI"
+
+_cloudflareChallenges:
+  verificationRequired: "セキュリティチェック"
+  verificationDescription: "続行するにはセキュリティチェックを完了してください。"
+  verificationCompleted: "セキュリティチェックが完了しました。もう一度お試しください。"
