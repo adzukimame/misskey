@@ -10433,6 +10433,20 @@ export interface Locale extends ILocale {
          */
         "native": string;
     };
+    "_cloudflareChallenges": {
+        /**
+         * セキュリティチェック
+         */
+        "verificationRequired": string;
+        /**
+         * 続行するにはセキュリティチェックを完了してください。
+         */
+        "verificationDescription": string;
+        /**
+         * セキュリティチェックが完了しました。もう一度お試しください。
+         */
+        "verificationCompleted": string;
+    };
 }
 declare const locales: {
     [lang: string]: Locale;
