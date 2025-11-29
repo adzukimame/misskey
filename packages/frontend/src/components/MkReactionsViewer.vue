@@ -80,6 +80,10 @@ watch([() => props.note.reactions, () => props.maxNumber], ([newSource, maxNumbe
 		newReactions.push([props.note.myReaction, newSource[props.note.myReaction]]);
 	}
 
+	if (defaultStore.state.hideReactionsViewerOnTimeline) {
+		newReactions = newReactions.filter(([x]) => x === props.note.myReaction);
+	}
+
 	reactions.value = newReactions;
 }, { immediate: true, deep: true });
 </script>
