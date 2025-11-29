@@ -26,8 +26,10 @@ import { defaultStore } from '@/store.js';
 const props = withDefaults(defineProps<{
 	note: Note;
 	maxNumber?: number;
+	isDetailed?: boolean;
 }>(), {
 	maxNumber: Infinity,
+	isDetailed: true,
 });
 
 const mock = inject<boolean>('mock', false);
@@ -78,6 +80,10 @@ watch([() => props.note.reactions, () => props.maxNumber], ([newSource, maxNumbe
 
 	if (props.note.myReaction && !newReactions.map(([x]) => x).includes(props.note.myReaction)) {
 		newReactions.push([props.note.myReaction, newSource[props.note.myReaction]]);
+	}
+
+	if (!props.isDetailed && defaultStore.state.hideReactionsViewerOnTimeline) {
+		newReactions = newReactions.filter(([x]) => x === props.note.myReaction);
 	}
 
 	reactions.value = newReactions;
