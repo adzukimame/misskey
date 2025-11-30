@@ -3807,7 +3807,6 @@ export type operations = {
             truemailInstance: string | null;
             truemailAuthKey: string | null;
             enableChartsForFederatedInstances: boolean;
-            enableServerMachineStats: boolean;
             manifestJsonOverride: string;
             policies: Record<string, never>;
             enableFanoutTimeline: boolean;
@@ -6914,7 +6913,6 @@ export type operations = {
           truemailInstance?: string | null;
           truemailAuthKey?: string | null;
           enableChartsForFederatedInstances?: boolean;
-          enableServerMachineStats?: boolean;
           serverRules?: string[];
           bannedEmailDomains?: string[];
           preservedUsernames?: string[];

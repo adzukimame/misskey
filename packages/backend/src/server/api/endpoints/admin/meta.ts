@@ -327,10 +327,6 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
-			enableServerMachineStats: {
-				type: 'boolean',
-				optional: false, nullable: false,
-			},
 			manifestJsonOverride: {
 				type: 'string',
 				optional: false, nullable: false,
@@ -592,7 +588,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				truemailInstance: instance.truemailInstance,
 				truemailAuthKey: instance.truemailAuthKey,
 				enableChartsForFederatedInstances: instance.enableChartsForFederatedInstances,
-				enableServerMachineStats: instance.enableServerMachineStats,
 				bannedEmailDomains: instance.bannedEmailDomains,
 				policies: { ...DEFAULT_POLICIES, ...instance.policies },
 				manifestJsonOverride: instance.manifestJsonOverride,

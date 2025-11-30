@@ -497,11 +497,6 @@ export class MiMeta {
 	})
 	public enableChartsForFederatedInstances: boolean;
 
-	@Column('boolean', {
-		default: false,
-	})
-	public enableServerMachineStats: boolean;
-
 	@Column('jsonb', {
 		default: { },
 	})

@@ -125,7 +125,6 @@ export const paramDef = {
 		truemailInstance: { type: 'string', nullable: true },
 		truemailAuthKey: { type: 'string', nullable: true },
 		enableChartsForFederatedInstances: { type: 'boolean' },
-		enableServerMachineStats: { type: 'boolean' },
 		serverRules: { type: 'array', items: { type: 'string' } },
 		bannedEmailDomains: { type: 'array', items: { type: 'string' } },
 		preservedUsernames: { type: 'array', items: { type: 'string' } },
@@ -534,10 +533,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (ps.enableChartsForFederatedInstances !== undefined) {
 				set.enableChartsForFederatedInstances = ps.enableChartsForFederatedInstances;
-			}
-
-			if (ps.enableServerMachineStats !== undefined) {
-				set.enableServerMachineStats = ps.enableServerMachineStats;
 			}
 
 			if (ps.serverRules !== undefined) {
