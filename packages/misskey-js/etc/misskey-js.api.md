@@ -555,19 +555,6 @@ export type Channels = {
         };
         receives: null;
     };
-    serverStats: {
-        params: null;
-        events: {
-            stats: (payload: ServerStats) => void;
-            statsLog: (payload: ServerStatsLog) => void;
-        };
-        receives: {
-            requestLog: {
-                id: string | number;
-                length: number;
-            };
-        };
-    };
     queueStats: {
         params: null;
         events: {
@@ -949,8 +936,6 @@ declare namespace entities {
         ID,
         DateString,
         PureRenote,
-        ServerStats,
-        ServerStatsLog,
         QueueStats,
         QueueStatsLog,
         EmojiAdded,
@@ -1346,7 +1331,6 @@ declare namespace entities {
         RolesUsersResponse,
         RequestResetPasswordRequest,
         ResetPasswordRequest,
-        ServerInfoResponse,
         StatsResponse,
         TestRequest,
         TestResponse,
@@ -2160,18 +2144,6 @@ type RolesUsersRequest = operations['roles___users']['requestBody']['content']['
 
 // @public (undocumented)
 type RolesUsersResponse = operations['roles___users']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
-type ServerInfoResponse = operations['server-info']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
-type ServerStats = {
-    cpu: number;
-    mem: number;
-};
-
-// @public (undocumented)
-type ServerStatsLog = ServerStats[];
 
 // @public (undocumented)
 type Signin = components['schemas']['Signin'];

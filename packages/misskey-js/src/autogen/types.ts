@@ -2407,22 +2407,6 @@ export type paths = {
      */
     post: operations['reset-password'];
   };
-  '/server-info': {
-    /**
-     * server-info
-     * @description No description provided.
-     *
-     * **Credential required**: *No*
-     */
-    get: operations['server-info'];
-    /**
-     * server-info
-     * @description No description provided.
-     *
-     * **Credential required**: *No*
-     */
-    post: operations['server-info'];
-  };
   '/stats': {
     /**
      * stats
@@ -3823,7 +3807,6 @@ export type operations = {
             truemailInstance: string | null;
             truemailAuthKey: string | null;
             enableChartsForFederatedInstances: boolean;
-            enableServerMachineStats: boolean;
             manifestJsonOverride: string;
             policies: Record<string, never>;
             enableFanoutTimeline: boolean;
@@ -6930,7 +6913,6 @@ export type operations = {
           truemailInstance?: string | null;
           truemailAuthKey?: string | null;
           enableChartsForFederatedInstances?: boolean;
-          enableServerMachineStats?: boolean;
           serverRules?: string[];
           bannedEmailDomains?: string[];
           preservedUsernames?: string[];
@@ -19162,56 +19144,6 @@ export type operations = {
       /** @description OK (without any results) */
       204: {
         content: never;
-      };
-      /** @description Client error */
-      400: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Authentication error */
-      401: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Forbidden error */
-      403: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description I'm Ai */
-      418: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-    };
-  };
-  /**
-   * server-info
-   * @description No description provided.
-   *
-   * **Credential required**: *No*
-   */
-  'server-info': {
-    responses: {
-      /** @description OK (with results) */
-      200: {
-        content: {
-          'application/json': {
-            mem: {
-              total: number;
-            };
-          };
-        };
       };
       /** @description Client error */
       400: {

@@ -12,7 +12,6 @@ import { GlobalTimelineChannelService } from './channels/global-timeline.js';
 import { MainChannelService } from './channels/main.js';
 import { ChannelChannelService } from './channels/channel.js';
 import { AdminChannelService } from './channels/admin.js';
-import { ServerStatsChannelService } from './channels/server-stats.js';
 import { QueueStatsChannelService } from './channels/queue-stats.js';
 import { UserListChannelService } from './channels/user-list.js';
 import { AntennaChannelService } from './channels/antenna.js';
@@ -33,7 +32,6 @@ export class ChannelsService {
 		private antennaChannelService: AntennaChannelService,
 		private channelChannelService: ChannelChannelService,
 		private driveChannelService: DriveChannelService,
-		private serverStatsChannelService: ServerStatsChannelService,
 		private queueStatsChannelService: QueueStatsChannelService,
 		private adminChannelService: AdminChannelService,
 	) {
@@ -52,7 +50,6 @@ export class ChannelsService {
 			case 'antenna': return this.antennaChannelService;
 			case 'channel': return this.channelChannelService;
 			case 'drive': return this.driveChannelService;
-			case 'serverStats': return this.serverStatsChannelService;
 			case 'queueStats': return this.queueStatsChannelService;
 			case 'admin': return this.adminChannelService;
 

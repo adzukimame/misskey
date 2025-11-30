@@ -95,7 +95,7 @@ export default [
 		},
 	},
 	{
-		files: ['src/pages/**/*.vue', 'src/ui/**/*.vue', 'src/widgets/server-metric/*.vue'],
+		files: ['src/pages/**/*.vue', 'src/ui/**/*.vue'],
 		rules: {
 			'vue/multi-word-component-names': 'off',
 		},

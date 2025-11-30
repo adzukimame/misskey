@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import type { permissions } from 'misskey-js';
 import type { KeyOf, Schema } from '@/misc/json-schema.js';
 
 import * as ep___admin_meta from './endpoints/admin/meta.js';
@@ -267,7 +266,6 @@ import * as ep___roles_users from './endpoints/roles/users.js';
 import * as ep___requestResetPassword from './endpoints/request-reset-password.js';
 import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
-import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
 import * as ep___test from './endpoints/test.js';
 import * as ep___username_available from './endpoints/username/available.js';
@@ -294,6 +292,8 @@ import * as ep___users_relation from './endpoints/users/relation.js';
 import * as ep___users_searchByUsernameAndHost from './endpoints/users/search-by-username-and-host.js';
 import * as ep___users_search from './endpoints/users/search.js';
 import * as ep___users_show from './endpoints/users/show.js';
+
+import type { permissions } from 'misskey-js';
 
 const eps = [
 	['admin/meta', ep___admin_meta],
@@ -556,7 +556,6 @@ const eps = [
 	['request-reset-password', ep___requestResetPassword],
 	['reset-db', ep___resetDb],
 	['reset-password', ep___resetPassword],
-	['server-info', ep___serverInfo],
 	['stats', ep___stats],
 	['test', ep___test],
 	['username/available', ep___username_available],
