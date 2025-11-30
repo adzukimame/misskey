@@ -65,7 +65,7 @@ import XStats from './overview.stats.vue';
 import XModerators from './overview.moderators.vue';
 import XHeatmap from './overview.heatmap.vue';
 import type { InstanceForPie } from './overview.pie.vue';
-import type { UserDetailed, FederationInstance, ServerInfoResponse } from 'misskey-js/entities.js';
+import type { UserDetailed, FederationInstance, AdminServerInfoResponse } from 'misskey-js/entities.js';
 import * as os from '@/os.js';
 import { misskeyApi } from '@/scripts/misskey-api.js';
 import { useStream } from '@/stream.js';
@@ -74,7 +74,7 @@ import { definePageMetadata } from '@/scripts/page-metadata.js';
 import MkFoldableSection from '@/components/MkFoldableSection.vue';
 
 const rootEl = useTemplateRef('rootEl');
-const serverInfo = ref<ServerInfoResponse | null>(null);
+const serverInfo = ref<AdminServerInfoResponse | null>(null);
 const topSubInstancesForPie = ref<InstanceForPie[] | null>(null);
 const topPubInstancesForPie = ref<InstanceForPie[] | null>(null);
 const federationPubActive = ref<number | null>(null);
