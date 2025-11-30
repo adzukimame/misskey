@@ -11,15 +11,8 @@ import { Storage } from '@/pizzax.js';
 import { misskeyApi } from '@/scripts/misskey-api.js';
 import { deepClone } from '@/scripts/clone.js';
 
-type ColumnWidget = {
-	name: string;
-	id: string;
-	data: Record<string, any>;
-};
-
 export const columnTypes = [
 	'main',
-	'widgets',
 	'notifications',
 	'tl',
 	'antenna',
@@ -36,7 +29,6 @@ export type Column = {
 	type: ColumnType;
 	name: string | null;
 	width: number;
-	widgets?: ColumnWidget[];
 	active?: boolean;
 	flexible?: boolean;
 	antennaId?: string;
@@ -264,54 +256,6 @@ export function popRightColumn(id: Column['id']) {
 	}
 	deckStore.set('columns', columns);
 
-	saveDeck();
-}
-
-export function addColumnWidget(id: Column['id'], widget: ColumnWidget) {
-	const columns = deepClone(deckStore.state.columns);
-	const columnIndex = deckStore.state.columns.findIndex(c => c.id === id);
-	const column = deepClone(deckStore.state.columns[columnIndex]);
-	if (column == null) return;
-	if (column.widgets == null) column.widgets = [];
-	column.widgets.unshift(widget);
-	columns[columnIndex] = column;
-	deckStore.set('columns', columns);
-	saveDeck();
-}
-
-export function removeColumnWidget(id: Column['id'], widget: ColumnWidget) {
-	const columns = deepClone(deckStore.state.columns);
-	const columnIndex = deckStore.state.columns.findIndex(c => c.id === id);
-	const column = deepClone(deckStore.state.columns[columnIndex]);
-	if (column == null || column.widgets == null) return;
-	column.widgets = column.widgets.filter(w => w.id !== widget.id);
-	columns[columnIndex] = column;
-	deckStore.set('columns', columns);
-	saveDeck();
-}
-
-export function setColumnWidgets(id: Column['id'], widgets: ColumnWidget[]) {
-	const columns = deepClone(deckStore.state.columns);
-	const columnIndex = deckStore.state.columns.findIndex(c => c.id === id);
-	const column = deepClone(deckStore.state.columns[columnIndex]);
-	if (column == null) return;
-	column.widgets = widgets;
-	columns[columnIndex] = column;
-	deckStore.set('columns', columns);
-	saveDeck();
-}
-
-export function updateColumnWidget(id: Column['id'], widgetId: string, widgetData: any) {
-	const columns = deepClone(deckStore.state.columns);
-	const columnIndex = deckStore.state.columns.findIndex(c => c.id === id);
-	const column = deepClone(deckStore.state.columns[columnIndex]);
-	if (column == null || column.widgets == null) return;
-	column.widgets = column.widgets.map(w => w.id === widgetId ? {
-		...w,
-		data: widgetData,
-	} : w);
-	columns[columnIndex] = column;
-	deckStore.set('columns', columns);
 	saveDeck();
 }
 
