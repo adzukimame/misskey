@@ -27,13 +27,6 @@ export type PureRenote =
 	& { files: []; fileIds: []; }
 	& NonNullableRecord<Pick<Note, 'renote' | 'renoteId'>>;
 
-export type ServerStats = {
-	cpu: number;
-	mem: number;
-};
-
-export type ServerStatsLog = ServerStats[];
-
 export type QueueStats = {
 	deliver: {
 		activeSincePrevTick: number;

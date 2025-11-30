@@ -15,8 +15,6 @@ import {
 	EmojiUpdated,
 	QueueStats,
 	QueueStatsLog,
-	ServerStats,
-	ServerStatsLog,
 } from './entities.js';
 
 export type Channels = {
@@ -146,19 +144,6 @@ export type Channels = {
 			folderUpdated: (payload: DriveFolder) => void;
 		};
 		receives: null;
-	};
-	serverStats: {
-		params: null;
-		events: {
-			stats: (payload: ServerStats) => void;
-			statsLog: (payload: ServerStatsLog) => void;
-		};
-		receives: {
-			requestLog: {
-				id: string | number;
-				length: number;
-			};
-		};
 	};
 	queueStats: {
 		params: null;
