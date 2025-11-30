@@ -112,14 +112,12 @@ import XAntennaColumn from '@/ui/deck/antenna-column.vue';
 import XListColumn from '@/ui/deck/list-column.vue';
 import XChannelColumn from '@/ui/deck/channel-column.vue';
 import XNotificationsColumn from '@/ui/deck/notifications-column.vue';
-import XWidgetsColumn from '@/ui/deck/widgets-column.vue';
 import XMentionsColumn from '@/ui/deck/mentions-column.vue';
 import XDirectColumn from '@/ui/deck/direct-column.vue';
 import { mainRouter } from '@/router/main.js';
 
 const columnComponents = {
 	main: XMainColumn,
-	widgets: XWidgetsColumn,
 	notifications: XNotificationsColumn,
 	tl: XTlColumn,
 	list: XListColumn,

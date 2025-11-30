@@ -71,11 +71,10 @@ queueMicrotask(() => {
 	Promise.all([
 		import('../src/components/index.js'),
 		import('../src/directives/index.js'),
-		import('../src/widgets/index.js'),
 		import('../src/scripts/theme.js'),
 		import('../src/store.js'),
 		import('../src/os.js'),
-	]).then(([{ default: components }, { default: directives }, { default: widgets }, { applyTheme }, { defaultStore }, os]) => {
+	]).then(([{ default: components }, { default: directives }, { applyTheme }, { defaultStore }, os]) => {
 		setup((app) => {
 			moduleInitialized = true;
 			if (app[appInitialized]) {
@@ -85,7 +84,6 @@ queueMicrotask(() => {
 			loadTheme(applyTheme);
 			components(app);
 			directives(app);
-			widgets(app);
 			misskeyOS = os;
 			if (isChromatic()) {
 				defaultStore.set('animation', false);

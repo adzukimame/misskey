@@ -12,12 +12,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<div :class="$style.spacer"></div>
 	</MkStickyContainer>
 
-	<div v-if="isDesktop && !pageMetadata?.needWideArea" :class="$style.widgets">
-		<XWidgets/>
-	</div>
-
-	<button v-if="(!isDesktop || pageMetadata?.needWideArea) && !isMobile" :class="$style.widgetButton" class="_button" @click="widgetsShowing = true"><i class="ti ti-apps"></i></button>
-
 	<div v-if="isMobile" ref="navFooter" :class="$style.nav">
 		<button :class="$style.navButton" class="_button" @click="drawerMenuShowing = true"><i :class="$style.navButtonIcon" class="ti ti-menu-2"></i><span v-if="menuIndicated" :class="$style.navButtonIndicator" class="_blink"><i class="_indicatorCircle"></i></span></button>
 		<button :class="$style.navButton" class="_button" @click="isRoot ? top() : mainRouter.push('/')"><i :class="$style.navButtonIcon" class="ti ti-home"></i></button>
@@ -27,7 +21,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<span class="_indicateCounter" :class="$style.itemIndicateValueIcon">{{ $i.unreadNotificationsCount > 99 ? '99+' : $i.unreadNotificationsCount }}</span>
 			</span>
 		</button>
-		<button :class="$style.navButton" class="_button" @click="widgetsShowing = true"><i :class="$style.navButtonIcon" class="ti ti-apps"></i></button>
 		<button :class="$style.postButton" class="_button" @click="os.post()"><i :class="$style.navButtonIcon" class="ti ti-pencil"></i></button>
 	</div>
 
@@ -57,33 +50,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 		</div>
 	</Transition>
 
-	<Transition
-		:enterActiveClass="defaultStore.state.animation ? $style.transition_widgetsDrawerBg_enterActive : ''"
-		:leaveActiveClass="defaultStore.state.animation ? $style.transition_widgetsDrawerBg_leaveActive : ''"
-		:enterFromClass="defaultStore.state.animation ? $style.transition_widgetsDrawerBg_enterFrom : ''"
-		:leaveToClass="defaultStore.state.animation ? $style.transition_widgetsDrawerBg_leaveTo : ''"
-	>
-		<div
-			v-if="widgetsShowing"
-			:class="$style.widgetsDrawerBg"
-			class="_modalBg"
-			@click="widgetsShowing = false"
-			@touchstart.passive="widgetsShowing = false"
-		></div>
-	</Transition>
-
-	<Transition
-		:enterActiveClass="defaultStore.state.animation ? $style.transition_widgetsDrawer_enterActive : ''"
-		:leaveActiveClass="defaultStore.state.animation ? $style.transition_widgetsDrawer_leaveActive : ''"
-		:enterFromClass="defaultStore.state.animation ? $style.transition_widgetsDrawer_enterFrom : ''"
-		:leaveToClass="defaultStore.state.animation ? $style.transition_widgetsDrawer_leaveTo : ''"
-	>
-		<div v-if="widgetsShowing" :class="$style.widgetsDrawer">
-			<button class="_button" :class="$style.widgetsCloseButton" @click="widgetsShowing = false"><i class="ti ti-x"></i></button>
-			<XWidgets/>
-		</div>
-	</Transition>
-
 	<XCommon/>
 </div>
 </template>
@@ -106,7 +72,6 @@ import { CURRENT_STICKY_BOTTOM } from '@/const.js';
 import { useScrollPositionManager } from '@/nirax.js';
 import { mainRouter } from '@/router/main.js';
 
-const XWidgets = defineAsyncComponent(() => import('./universal.widgets.vue'));
 const XSidebar = defineAsyncComponent(() => import('@/ui/_common_/navbar.vue'));
 
 const isRoot = computed(() => mainRouter.currentRoute.value.name === 'index');
@@ -122,7 +87,6 @@ window.addEventListener('resize', () => {
 });
 
 const pageMetadata = ref<null | PageMetadata>(null);
-const widgetsShowing = ref(false);
 const navFooter = shallowRef<HTMLElement>();
 const contents = shallowRef<InstanceType<typeof MkStickyContainer>>();
 
@@ -162,16 +126,6 @@ if (window.innerWidth > 1024) {
 		location.reload();
 	}
 }
-
-defaultStore.loaded.then(() => {
-	if (defaultStore.state.widgets.length === 0) {
-		defaultStore.set('widgets', [{
-			name: 'instanceInfo',
-			id: 'a',
-			data: {},
-		}]);
-	}
-});
 
 onMounted(() => {
 	if (!isDesktop.value) {
@@ -259,7 +213,6 @@ body {
 
 <style lang="scss" module>
 $ui-font-size: 1em; // TODO: どこかに集約したい
-$widgets-hide-threshold: 1090px;
 
 .transition_menuDrawerBg_enterActive,
 .transition_menuDrawerBg_leaveActive {
@@ -281,28 +234,6 @@ $widgets-hide-threshold: 1090px;
 .transition_menuDrawer_leaveTo {
 	opacity: 0;
 	transform: translateX(-240px);
-}
-
-.transition_widgetsDrawerBg_enterActive,
-.transition_widgetsDrawerBg_leaveActive {
-	opacity: 1;
-	transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-.transition_widgetsDrawerBg_enterFrom,
-.transition_widgetsDrawerBg_leaveTo {
-	opacity: 0;
-}
-
-.transition_widgetsDrawer_enterActive,
-.transition_widgetsDrawer_leaveActive {
-	opacity: 1;
-	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-.transition_widgetsDrawer_enterFrom,
-.transition_widgetsDrawer_leaveTo {
-	opacity: 0;
-	transform: translateX(240px);
 }
 
 .root {
@@ -327,64 +258,6 @@ $widgets-hide-threshold: 1090px;
 	background: var(--MI_THEME-bg);
 }
 
-.widgets {
-	width: 350px;
-	height: 100%;
-	box-sizing: border-box;
-	overflow: auto;
-	padding: var(--MI-margin) var(--MI-margin) calc(var(--MI-margin) + env(safe-area-inset-bottom, 0px));
-	border-left: solid 0.5px var(--MI_THEME-divider);
-	background: var(--MI_THEME-bg);
-
-	@media (max-width: $widgets-hide-threshold) {
-		display: none;
-	}
-}
-
-.widgetButton {
-	display: block;
-	position: fixed;
-	z-index: 1000;
-	bottom: 32px;
-	right: 32px;
-	width: 64px;
-	height: 64px;
-	border-radius: 100%;
-	box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
-	font-size: 22px;
-	background: var(--MI_THEME-panel);
-}
-
-.widgetsDrawerBg {
-	z-index: 1001;
-}
-
-.widgetsDrawer {
-	position: fixed;
-	top: 0;
-	right: 0;
-	z-index: 1001;
-	width: 310px;
-	height: 100dvh;
-	padding: var(--MI-margin) var(--MI-margin) calc(var(--MI-margin) + env(safe-area-inset-bottom, 0px)) !important;
-	box-sizing: border-box;
-	overflow: auto;
-	overscroll-behavior: contain;
-	background: var(--MI_THEME-bg);
-}
-
-.widgetsCloseButton {
-	padding: 8px;
-	display: block;
-	margin: 0 auto;
-}
-
-@media (min-width: 370px) {
-	.widgetsCloseButton {
-		display: none;
-	}
-}
-
 .nav {
 	position: fixed;
 	z-index: 1000;
@@ -392,7 +265,7 @@ $widgets-hide-threshold: 1090px;
 	left: 0;
 	padding: 12px 12px max(12px, env(safe-area-inset-bottom, 0px)) 12px;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-gap: 8px;
 	width: 100%;
 	box-sizing: border-box;

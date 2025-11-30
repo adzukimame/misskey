@@ -5,7 +5,6 @@
 
 import { computed, watch, version as vueVersion, App } from 'vue';
 import { compareVersions } from 'compare-versions';
-import widgets from '@/widgets/index.js';
 import directives from '@/directives/index.js';
 import components from '@/components/index.js';
 import { version, lang, updateLocale, locale } from '@/config.js';
@@ -219,7 +218,6 @@ export async function common(createVue: () => App<Element>) {
 		app.config.performance = true;
 	}
 
-	widgets(app);
 	directives(app);
 	components(app);
 
