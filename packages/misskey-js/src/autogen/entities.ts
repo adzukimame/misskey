@@ -382,7 +382,6 @@ export type RolesUsersRequest = operations['roles___users']['requestBody']['cont
 export type RolesUsersResponse = operations['roles___users']['responses']['200']['content']['application/json'];
 export type RequestResetPasswordRequest = operations['request-reset-password']['requestBody']['content']['application/json'];
 export type ResetPasswordRequest = operations['reset-password']['requestBody']['content']['application/json'];
-export type ServerInfoResponse = operations['server-info']['responses']['200']['content']['application/json'];
 export type StatsResponse = operations['stats']['responses']['200']['content']['application/json'];
 export type TestRequest = operations['test']['requestBody']['content']['application/json'];
 export type TestResponse = operations['test']['responses']['200']['content']['application/json'];

@@ -266,7 +266,6 @@ import * as ep___roles_users from './endpoints/roles/users.js';
 import * as ep___requestResetPassword from './endpoints/request-reset-password.js';
 import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
-import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
 import * as ep___test from './endpoints/test.js';
 import * as ep___username_available from './endpoints/username/available.js';
@@ -557,7 +556,6 @@ const $roles_users: Provider = { provide: 'ep:roles/users', useClass: ep___roles
 const $requestResetPassword: Provider = { provide: 'ep:request-reset-password', useClass: ep___requestResetPassword.default };
 const $resetDb: Provider = { provide: 'ep:reset-db', useClass: ep___resetDb.default };
 const $resetPassword: Provider = { provide: 'ep:reset-password', useClass: ep___resetPassword.default };
-const $serverInfo: Provider = { provide: 'ep:server-info', useClass: ep___serverInfo.default };
 const $stats: Provider = { provide: 'ep:stats', useClass: ep___stats.default };
 const $test: Provider = { provide: 'ep:test', useClass: ep___test.default };
 const $username_available: Provider = { provide: 'ep:username/available', useClass: ep___username_available.default };
@@ -852,7 +850,6 @@ const $users_show: Provider = { provide: 'ep:users/show', useClass: ep___users_s
 		$requestResetPassword,
 		$resetDb,
 		$resetPassword,
-		$serverInfo,
 		$stats,
 		$test,
 		$username_available,
@@ -1141,7 +1138,6 @@ const $users_show: Provider = { provide: 'ep:users/show', useClass: ep___users_s
 		$requestResetPassword,
 		$resetDb,
 		$resetPassword,
-		$serverInfo,
 		$stats,
 		$test,
 		$username_available,

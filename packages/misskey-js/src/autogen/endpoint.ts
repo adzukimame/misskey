@@ -379,7 +379,6 @@ import type {
 	RolesUsersResponse,
 	RequestResetPasswordRequest,
 	ResetPasswordRequest,
-	ServerInfoResponse,
 	StatsResponse,
 	TestRequest,
 	TestResponse,
@@ -688,7 +687,6 @@ export type Endpoints = {
 	'request-reset-password': { req: RequestResetPasswordRequest; res: EmptyResponse };
 	'reset-db': { req: EmptyRequest; res: EmptyResponse };
 	'reset-password': { req: ResetPasswordRequest; res: EmptyResponse };
-	'server-info': { req: EmptyRequest; res: ServerInfoResponse };
 	'stats': { req: EmptyRequest; res: StatsResponse };
 	'test': { req: TestRequest; res: TestResponse };
 	'username/available': { req: UsernameAvailableRequest; res: UsernameAvailableResponse };
