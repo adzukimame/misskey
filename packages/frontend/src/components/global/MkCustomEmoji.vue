@@ -51,6 +51,7 @@ const props = defineProps<{
 }>();
 
 const react = inject<((name: string) => void) | null>('react', null);
+const forceShowingAnimatedImagesOnHover = inject<boolean>('forceShowingAnimatedImagesOnHover', false);
 const isHovered = ref(false);
 
 const customEmojiName = computed(() => (props.name[0] === ':' ? props.name.substring(1, props.name.length - 1) : props.name).replace('@.', ''));
@@ -80,7 +81,7 @@ const url = computed(() => {
 
 	const shouldShowStatic = defaultStore.reactiveState.disableShowingAnimatedImages.value
 		&& !props.forceShowingAnimatedImages
-		&& !isHovered.value;
+		&& !(forceShowingAnimatedImagesOnHover && isHovered.value);
 
 	return shouldShowStatic ? getStaticImageUrl(proxied) : proxied;
 });
@@ -132,9 +133,11 @@ function onClick(ev: MouseEvent) {
 }
 
 function onMouseEnter() {
-	if (defaultStore.reactiveState.disableShowingAnimatedImages.value && !props.forceShowingAnimatedImages) {
-		isHovered.value = true;
-	}
+	if (!forceShowingAnimatedImagesOnHover) return;
+	if (props.forceShowingAnimatedImages) return;
+	if (!defaultStore.reactiveState.disableShowingAnimatedImages.value) return;
+
+	isHovered.value = true;
 }
 
 function onMouseLeave() {

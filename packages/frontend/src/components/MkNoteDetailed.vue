@@ -320,6 +320,8 @@ provide('react', (reaction: string) => {
 	});
 });
 
+provide('forceShowingAnimatedImagesOnHover', true);
+
 const tab = ref(props.initialTab);
 const reactionTabType = ref<string | null>(null);
 

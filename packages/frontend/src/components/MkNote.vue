@@ -345,6 +345,8 @@ provide('react', (reaction: string) => {
 	});
 });
 
+provide('forceShowingAnimatedImagesOnHover', true);
+
 if (props.mock) {
 	watch(() => props.note, (to) => {
 		note.value = deepClone(to);
