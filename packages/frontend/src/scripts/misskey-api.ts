@@ -46,13 +46,6 @@ export function misskeyApi<
 			},
 			signal,
 		}).then(async (res) => {
-			//#region Blocked by Cloudflare WAF
-			if (res.headers.get('cf-mitigated') === 'challenge') {
-				const { attemptShowCloudflareChallengeDialog } = await import('@/scripts/cloudflare-challenge.js');
-				await attemptShowCloudflareChallengeDialog();
-			}
-			//#endregion
-
 			const body = res.status === 204 ? null : await res.json();
 
 			if (res.status === 200) {
@@ -96,13 +89,6 @@ export function misskeyApiGet<
 			mode: 'same-origin',
 			cache: 'default',
 		}).then(async (res) => {
-			//#region Blocked by Cloudflare WAF
-			if (res.headers.get('cf-mitigated') === 'challenge') {
-				const { attemptShowCloudflareChallengeDialog } = await import('@/scripts/cloudflare-challenge.js');
-				await attemptShowCloudflareChallengeDialog();
-			}
-			//#endregion
-
 			const body = res.status === 204 ? null : await res.json();
 
 			if (res.status === 200) {

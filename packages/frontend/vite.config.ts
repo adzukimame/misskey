@@ -136,26 +136,9 @@ export function getConfig(): UserConfig {
 				},
 				external: externalPackages.map(p => p.match),
 				output: {
-					manualChunks(id) {
-						// Critical components that must be available before any Cloudflare challenge
-						// These must be in the main bundle because dynamic import chunks can be blocked by WAF
-						if (id.includes('/src/scripts/cloudflare-challenge.ts') ||
-						    id.includes('/src/components/MkCloudflareChallengeDialog.vue') ||
-						    id.includes('/src/components/MkCaptcha.vue') ||
-						    id.includes('/src/components/MkModal.vue')) {
-							return 'app';
-						}
-
-						// Standard chunking - check for node_modules paths
-						if (id.includes('node_modules/vue/')) {
-							return 'vue';
-						}
-						if (id.includes('node_modules/photoswipe/')) {
-							return 'photoswipe';
-						}
-
-						// Let Vite handle other chunks automatically
-						return undefined;
+					manualChunks: {
+						vue: ['vue'],
+						photoswipe: ['photoswipe', 'photoswipe/lightbox', 'photoswipe/style.css'],
 					},
 					chunkFileNames: process.env.NODE_ENV === 'production' ? '[hash:8].js' : '[name]-[hash:8].js',
 					assetFileNames: process.env.NODE_ENV === 'production' ? '[hash:8][extname]' : '[name]-[hash:8][extname]',
