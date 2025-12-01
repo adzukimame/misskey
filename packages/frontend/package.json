@@ -65,7 +65,6 @@
 		"acorn": "8.12.1",
 		"aiscript-vscode": "github:aiscript-dev/aiscript-vscode#v0.1.11",
 		"astring": "1.9.0",
-		"async-mutex": "^0.5.0",
 		"broadcast-channel": "7.0.0",
 		"buraha": "0.0.1",
 		"chart.js": "4.4.4",

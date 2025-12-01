@@ -48,11 +48,37 @@ export function misskeyApi<
 		}).then(async (res) => {
 			//#region Blocked by Cloudflare WAF
 			if (res.headers.get('cf-mitigated') === 'challenge') {
-				const { attemptShowCloudflareChallengeDialog } = await import('@/scripts/cloudflare-challenge.js');
-				await attemptShowCloudflareChallengeDialog();
+				// Import handler dynamically to avoid circular dependency
+				const { showCloudflareChallengeDialog } = await import('@/scripts/cloudflare-challenge.js');
+
+				try {
+					// Show challenge dialog (will resolve when challenge completes)
+					await showCloudflareChallengeDialog();
+
+					// Challenge completed successfully
+					// Reject with specific error so user knows to retry
+					reject({
+						code: 'CLOUDFLARE_CHALLENGE_REQUIRED',
+						message: 'Please try again',
+						id: '3f5336d7-2706-494b-811e-fe98d0e65a5d',
+					});
+				} catch (err) {
+					// Challenge dialog not shown (not configured) or user cancelled
+					// Pass through the original error/response
+					const body = res.status === 204 ? null : await res.json();
+					if (res.status === 200) {
+						resolve(body);
+					} else if (res.status === 204) {
+						resolve(undefined as _ResT);
+					} else {
+						reject(body.error);
+					}
+				}
+				return; // Don't continue with normal processing
 			}
 			//#endregion
 
+			// Normal response handling
 			const body = res.status === 204 ? null : await res.json();
 
 			if (res.status === 200) {
@@ -98,11 +124,37 @@ export function misskeyApiGet<
 		}).then(async (res) => {
 			//#region Blocked by Cloudflare WAF
 			if (res.headers.get('cf-mitigated') === 'challenge') {
-				const { attemptShowCloudflareChallengeDialog } = await import('@/scripts/cloudflare-challenge.js');
-				await attemptShowCloudflareChallengeDialog();
+				// Import handler dynamically to avoid circular dependency
+				const { showCloudflareChallengeDialog } = await import('@/scripts/cloudflare-challenge.js');
+
+				try {
+					// Show challenge dialog (will resolve when challenge completes)
+					await showCloudflareChallengeDialog();
+
+					// Challenge completed successfully
+					// Reject with specific error so user knows to retry
+					reject({
+						code: 'CLOUDFLARE_CHALLENGE_REQUIRED',
+						message: 'Please try again',
+						id: 'c0a62bcd-472b-43c9-8b5e-94de043f1eeb',
+					});
+				} catch (err) {
+					// Challenge dialog not shown (not configured) or user cancelled
+					// Pass through the original error/response
+					const body = res.status === 204 ? null : await res.json();
+					if (res.status === 200) {
+						resolve(body);
+					} else if (res.status === 204) {
+						resolve(undefined as _ResT);
+					} else {
+						reject(body.error);
+					}
+				}
+				return; // Don't continue with normal processing
 			}
 			//#endregion
 
+			// Normal response handling
 			const body = res.status === 204 ? null : await res.json();
 
 			if (res.status === 200) {
