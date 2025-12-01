@@ -21,6 +21,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 	@error.once="errored = true"
 	@load.once="errored = false"
 	@click="onClick"
+	@mouseenter="onMouseEnter"
+	@mouseleave="onMouseLeave"
 />
 </template>
 
@@ -49,6 +51,7 @@ const props = defineProps<{
 }>();
 
 const react = inject<((name: string) => void) | null>('react', null);
+const isHovered = ref(false);
 
 const customEmojiName = computed(() => (props.name[0] === ':' ? props.name.substring(1, props.name.length - 1) : props.name).replace('@.', ''));
 const isLocal = computed(() => !props.host && (customEmojiName.value.endsWith('@.') || !customEmojiName.value.includes('@')));
@@ -74,9 +77,12 @@ const url = computed(() => {
 				props.useOriginalSize ? undefined : 'emoji',
 				true,
 			);
-	return defaultStore.reactiveState.disableShowingAnimatedImages.value && !props.forceShowingAnimatedImages
-		? getStaticImageUrl(proxied)
-		: proxied;
+
+	const shouldShowStatic = defaultStore.reactiveState.disableShowingAnimatedImages.value
+		&& !props.forceShowingAnimatedImages
+		&& !isHovered.value;
+
+	return shouldShowStatic ? getStaticImageUrl(proxied) : proxied;
 });
 
 const alt = computed(() => `:${customEmojiName.value}:`);
@@ -123,6 +129,16 @@ function onClick(ev: MouseEvent) {
 			},
 		], ev.currentTarget ?? ev.target);
 	}
+}
+
+function onMouseEnter() {
+	if (defaultStore.reactiveState.disableShowingAnimatedImages.value && !props.forceShowingAnimatedImages) {
+		isHovered.value = true;
+	}
+}
+
+function onMouseLeave() {
+	isHovered.value = false;
 }
 </script>
 
