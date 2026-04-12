@@ -26,14 +26,13 @@ COPY --link ["packages/sw/package.json", "./packages/sw/"]
 COPY --link ["packages/misskey-js/package.json", "./packages/misskey-js/"]
 
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
-	pnpm i --frozen-lockfile --aggregate-output
+	pnpm install --frozen-lockfile --aggregate-output
 
 ARG NODE_ENV=production
 
 COPY --link . ./
 
-RUN pnpm build
-RUN rm -rf .git/
+RUN pnpm run build
 
 # build native dependencies for target platform
 
@@ -55,7 +54,9 @@ COPY --link ["packages/misskey-js/package.json", "./packages/misskey-js/"]
 ARG NODE_ENV=production
 
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
-	pnpm i --frozen-lockfile --aggregate-output
+	pnpm install --frozen-lockfile --prod --aggregate-output
+
+# actual runner
 
 FROM --platform=$TARGETPLATFORM node:${NODE_VERSION}-slim AS runner
 
@@ -66,8 +67,6 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	ca-certificates ffmpeg tini curl libjemalloc-dev libjemalloc2 \
 	&& ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so \
-  && npm install -g corepack@latest \
-	&& corepack enable \
 	&& groupadd -g "${GID}" misskey \
 	&& useradd -l -u "${UID}" -g "${GID}" -m -d /misskey misskey \
 	&& find / -type d -path /sys -prune -o -type d -path /proc -prune -o -type f -perm /u+s -ignore_readdir_race -exec chmod u-s {} \; \
@@ -78,19 +77,16 @@ RUN apt-get update \
 USER misskey
 WORKDIR /misskey
 
-# add package.json to add pnpm
-COPY --chown=misskey:misskey ./package.json ./package.json
-RUN corepack install
+COPY --chown=misskey:misskey --from=native-builder /misskey/built ./built
+COPY --chown=misskey:misskey --from=native-builder /misskey/packages/misskey-js/built ./packages/misskey-js/built
+COPY --chown=misskey:misskey --from=native-builder /misskey/packages/backend/built ./packages/backend/built
 
 COPY --chown=misskey:misskey --from=target-builder /misskey/node_modules ./node_modules
 COPY --chown=misskey:misskey --from=target-builder /misskey/packages/backend/node_modules ./packages/backend/node_modules
 COPY --chown=misskey:misskey --from=target-builder /misskey/packages/misskey-js/node_modules ./packages/misskey-js/node_modules
-COPY --chown=misskey:misskey --from=native-builder /misskey/built ./built
-COPY --chown=misskey:misskey --from=native-builder /misskey/packages/misskey-js/built ./packages/misskey-js/built
-COPY --chown=misskey:misskey --from=native-builder /misskey/packages/backend/built ./packages/backend/built
+
 COPY --chown=misskey:misskey . ./
 
-COPY --chown=misskey:misskey ./migrate-and-start.sh /misskey/migrate-and-start.sh
 RUN chmod +x /misskey/migrate-and-start.sh
 
 ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so
