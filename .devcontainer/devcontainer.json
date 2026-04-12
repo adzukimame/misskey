@@ -14,12 +14,15 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"editorconfig.editorconfig",
 				"dbaeumer.vscode-eslint",
 				"Vue.volar",
-				"Orta.vscode-jest",
-				"dbaeumer.vscode-eslint",
-				"mrmlnc.vscode-json5"
+				"mrmlnc.vscode-json5",
+				"github.vscode-github-actions",
+				"ms-azuretools.vscode-docker",
+				"waderyan.gitblame",
+				"mhutchie.git-graph",
+				"YoavBls.pretty-ts-errors",
+				"redhat.vscode-yaml"
 			]
 		}
 	}
