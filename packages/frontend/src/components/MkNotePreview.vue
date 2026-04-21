@@ -24,7 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 import type { DriveFile, User } from 'misskey-js/entities.js';
 import type { PollEditorModelValue } from '@/components/MkPollEditor.vue';
 import MkCwButton from '@/components/MkCwButton.vue';
@@ -40,6 +40,8 @@ const props = defineProps<{
 	cw: string | null;
 	user: User;
 }>();
+
+provide('forceShowingAnimatedImagesOnHover', true);
 </script>
 
 <style lang="scss" module>
