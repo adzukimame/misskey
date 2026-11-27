@@ -7,7 +7,9 @@
 		"ghcr.io/devcontainers/features/node:1": {
 			"version": "20.20.2"
 		},
-		"ghcr.io/devcontainers-contrib/features/corepack:1": {}
+		"ghcr.io/devcontainers-extra/features/corepack:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
 	},
 	"forwardPorts": [3000],
 	"postCreateCommand": "/bin/bash .devcontainer/init.sh",
@@ -25,5 +27,11 @@
 				"redhat.vscode-yaml"
 			]
 		}
+	},
+	"mounts": [
+		"source=claude-code-config-${devcontainerId},target=/home/node/.claude,type=volume"
+	],
+	"containerEnv": {
+		"CLAUDE_CONFIG_DIR": "/home/node/.claude"
 	}
 }
