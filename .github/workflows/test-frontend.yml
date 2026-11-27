@@ -108,6 +108,25 @@ jobs:
       id: setup-chrome
       with:
         chrome-version: 157
+    # Cypress 13は"Google Chrome for Testing"のバージョンを正しく検出できず、起動に必要な引数が付与されないため、
+    # --versionの出力を"Google Chrome <version>"に書き換えるラッパーを経由して起動する
+    - name: Create Chrome wrapper
+      id: chrome-wrapper
+      env:
+        CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      run: |
+        wrapper="$RUNNER_TEMP/google-chrome"
+        cat > "$wrapper" <<EOF
+        #!/bin/sh
+        if [ "\$1" = "--version" ]; then
+          "$CHROME_PATH" --version | sed 's/Google Chrome for Testing/Google Chrome/'
+          exit
+        fi
+        exec "$CHROME_PATH" "\$@"
+        EOF
+        chmod +x "$wrapper"
+        "$wrapper" --version
+        echo "chrome-path=$wrapper" >> "$GITHUB_OUTPUT"
     - name: Run Cypress
       uses: cypress-io/github-action@v7
       timeout-minutes: 15
@@ -116,7 +135,7 @@ jobs:
         start: pnpm run start:test
         wait-on: 'http://localhost:61812'
         headed: true
-        browser: ${{ steps.setup-chrome.outputs.chrome-path }}
+        browser: ${{ steps.chrome-wrapper.outputs.chrome-path }}
     - name: Upload screenshots
       uses: actions/upload-artifact@v4
       if: failure()
