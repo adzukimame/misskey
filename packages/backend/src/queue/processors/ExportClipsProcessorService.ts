@@ -22,6 +22,7 @@ import { IdService } from '@/core/IdService.js';
 import { QueueLoggerService } from '../QueueLoggerService.js';
 import type * as Bull from 'bullmq';
 import type { DbJobDataWithUser } from '../types.js';
+import type { WritableStreamDefaultWriter } from 'node:stream/web';
 
 @Injectable()
 export class ExportClipsProcessorService {

@@ -20,7 +20,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		</div>
 	</MkFoldableSection>
 
-	<MkFoldableSection v-for="category in customEmojiCategories" v-once :key="category">
+	<MkFoldableSection v-for="category in customEmojiCategories" :key="category" v-memo="[]">
 		<template #header>{{ category || i18n.ts.other }}</template>
 		<div :class="$style.emojis">
 			<XEmoji v-for="emoji in customEmojis.filter(e => e.category === category)" :key="emoji.name" :emoji="emoji" :class="{ [$style.skipRender]: defaultStore.state.skipNoteRender }"/>

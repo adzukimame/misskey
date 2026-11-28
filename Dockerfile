@@ -1,4 +1,4 @@
-ARG NODE_VERSION=20.20.2-alpine
+ARG NODE_VERSION=22.23.5-alpine
 
 # build assets & compile TypeScript
 
