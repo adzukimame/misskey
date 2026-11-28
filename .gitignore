@@ -78,3 +78,6 @@ vite.config.ts.timestamp-*
 
 # VSCode addon
 .favorites.json
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+.claude/skills/playwright-cli
