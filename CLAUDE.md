@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-This repository is a fork of Misskey, a decentralized ActivityPub social platform, maintained at `adzukimame/misskey`. The main branch is `develop-mame`. Many upstream features have been removed in this fork (for example widgets, server-info/serverStats, and the bundled sensitivity-detection model), so don't assume an upstream feature exists here. CHANGELOG entries, PR descriptions (`.github/pull_request_template.md`: What / Why / Additional info) and commit messages are written in Japanese.
+This repository is a fork of Misskey, a decentralized ActivityPub social platform, maintained at `adzukimame/misskey`. The main branch is `develop-mame`. Many upstream features have been removed in this fork (for example widgets, server-info/serverStats, and the bundled sensitivity-detection model), so don't assume an upstream feature exists here. CHANGELOG entries,
 
 This is a pnpm workspace (`pnpm@9`, Node version in `.node-version`). It has four packages:
 - `packages/backend`: a NestJS + TypeORM (PostgreSQL) + Redis/BullMQ server. It is compiled with SWC.
